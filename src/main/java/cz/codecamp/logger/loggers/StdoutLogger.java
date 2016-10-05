@@ -15,21 +15,21 @@ public class StdoutLogger implements PragmaticLoggerInterface {
 
     @Override
     public void debug(String message) {
-        System.out.printf("[%s]: %s\n", LogLevelEnum.DEBUG.name(), message);
+        log(LogLevelEnum.DEBUG, message);
     }
 
     @Override
     public void info(String message) {
-        System.out.printf("[%s]: %s\n", LogLevelEnum.INFO.name(), message);
+        log(LogLevelEnum.INFO, message);
     }
 
     @Override
     public void warning(String message) {
-        System.out.printf("[%s]: %s\n", LogLevelEnum.WARNING.name(), message);
+        log(LogLevelEnum.WARNING, message);
     }
 
     @Override
     public void error(String message) {
-        System.out.printf("[%s]: %s\n", LogLevelEnum.ERROR.name(), message);
+        log(LogLevelEnum.ERROR, message);
     }
 }
