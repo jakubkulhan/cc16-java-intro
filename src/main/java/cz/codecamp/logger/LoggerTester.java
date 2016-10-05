@@ -26,7 +26,7 @@ public class LoggerTester {
     public static void main(String[] args) {
 
 
-        LoggerInterface logger = new MultiLogger(new PrintStreamLogger(System.out), new PrintStreamLogger(System.out), new PrintStreamLogger(System.out));
+        LoggerInterface logger = new MultiLogger(new PrintStreamLogger(System.out), new PrintStreamLogger(System.out), new PrintStreamLogger(System.out), new StdoutLogger());
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");

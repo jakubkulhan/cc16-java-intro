@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileLogger implements LoggerInterface, PragmaticLoggerInterface {
 
@@ -15,7 +17,8 @@ public class FileLogger implements LoggerInterface, PragmaticLoggerInterface {
     public void log(LogLevelEnum level, String message) {
         try {
             PrintStream stream = new PrintStream(new FileOutputStream(new File("application.log"), true));
-            stream.printf("[%s]: %s\n", level.name(), message);
+            String ts = new SimpleDateFormat("yyyy-mm-dd hh:mm").format(new Date());
+            stream.printf("[%s] [%s]: %s\n", level.name(), message);
         } catch (FileNotFoundException e) {
             System.err.println(e.getMessage());
         }

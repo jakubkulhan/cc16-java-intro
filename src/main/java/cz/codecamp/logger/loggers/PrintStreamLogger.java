@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface {
 
@@ -19,7 +21,8 @@ public class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterf
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        this.printStream.printf("[%s]: %s\n", level.name(), message);
+        String ts = new SimpleDateFormat("yyyy-mm-dd hh:mm").format(new Date());
+        this.printStream.printf("[%s] [%s]: %s\n", level.name(), ts, message);
     }
 
 }
