@@ -1,8 +1,22 @@
 package cz.codecamp.logger;
 
 public interface PragmaticLoggerInterface extends LoggerInterface {
-    void debug(String message);
-    void info(String message);
-    void warning(String message);
-    void error(String message);
+    default void debug(String message) {
+        this.log(LogLevelEnum.DEBUG, message);
+    }
+
+
+    default void info(String message) {
+        this.log(LogLevelEnum.INFO, message);
+    }
+
+
+    default void warning(String message) {
+        this.log(LogLevelEnum.WARNING, message);
+    }
+
+
+    default void error(String message) {
+        this.log(LogLevelEnum.ERROR, message);
+    }
 }
