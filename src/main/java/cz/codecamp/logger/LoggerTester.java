@@ -1,5 +1,6 @@
 package cz.codecamp.logger;
 
+import cz.codecamp.logger.loggers.FileLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
 import java.util.Collections;
@@ -12,7 +13,7 @@ public class LoggerTester {
     private static final Map<String, LogLevelEnum> LEVEL_MAP;
 
     static {
-        Map<String, LogLevelEnum> levelMap = new HashMap<>();
+        Map<String, LogLevelEnum> levelMap = new HashMap<String, LogLevelEnum>();
         levelMap.put("d", LogLevelEnum.DEBUG);
         levelMap.put("i", LogLevelEnum.INFO);
         levelMap.put("w", LogLevelEnum.WARNING);
@@ -22,7 +23,7 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+        LoggerInterface logger = new FileLogger();
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
