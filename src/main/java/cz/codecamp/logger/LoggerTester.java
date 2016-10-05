@@ -1,6 +1,7 @@
 package cz.codecamp.logger;
 
 import cz.codecamp.logger.loggers.FileLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
 import cz.codecamp.logger.loggers.PrintStreamLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
@@ -24,9 +25,8 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-//        LoggerInterface logger1 = new StdoutLogger();
-        LoggerInterface logger1 = new PrintStreamLogger(System.out);
-//        LoggerInterface logger2 = new FileLogger();
+
+        LoggerInterface logger = new MultiLogger(new PrintStreamLogger(System.out), new PrintStreamLogger(System.out), new PrintStreamLogger(System.out));
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
@@ -49,8 +49,7 @@ public class LoggerTester {
                 continue;
             }
 
-            logger1.log(level, parts[1]);
-//            logger2.log(level, parts[1]);
+            logger.log(level, parts[1]);
         }
     }
 
