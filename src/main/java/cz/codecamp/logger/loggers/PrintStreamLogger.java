@@ -7,6 +7,7 @@ import cz.codecamp.logger.PragmaticLoggerInterface;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Date;
 
 /**
  * Created by vkorecky on 4.10.16.
@@ -20,7 +21,7 @@ public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticL
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        stream.printf("[%s]: %s\n", level.name(), message);
+        stream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
     }
 
     /**
@@ -42,25 +43,5 @@ public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticL
             stream.flush();
             stream.close();
         }
-    }
-
-    @Override
-    public void debug(String message) {
-        log(LogLevelEnum.DEBUG, message);
-    }
-
-    @Override
-    public void info(String message) {
-        log(LogLevelEnum.INFO, message);
-    }
-
-    @Override
-    public void warning(String message) {
-        log(LogLevelEnum.WARNING, message);
-    }
-
-    @Override
-    public void error(String message) {
-        log(LogLevelEnum.ERROR, message);
     }
 }
