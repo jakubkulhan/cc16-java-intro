@@ -2,6 +2,7 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class MultiLogger implements LoggerInterface {
+public class MultiLogger implements LoggerInterface, PragmaticLoggerInterface {
 
     private List<LoggerInterface> loggers;
 
@@ -29,5 +30,25 @@ public class MultiLogger implements LoggerInterface {
 
         //Varianta 2
         loggers.forEach((l) -> l.log(level, message));
+    }
+
+    @Override
+    public void debug(String message) {
+        log(LogLevelEnum.DEBUG, message);
+    }
+
+    @Override
+    public void info(String message) {
+        log(LogLevelEnum.INFO, message);
+    }
+
+    @Override
+    public void warning(String message) {
+        log(LogLevelEnum.WARNING, message);
+    }
+
+    @Override
+    public void error(String message) {
+        log(LogLevelEnum.ERROR, message);
     }
 }

@@ -2,6 +2,7 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.PrintStream;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class PrintStreamLogger implements LoggerInterface, Closeable {
+public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
     private PrintStream stream;
 
     public PrintStreamLogger(PrintStream stream) {
@@ -41,5 +42,25 @@ public class PrintStreamLogger implements LoggerInterface, Closeable {
             stream.flush();
             stream.close();
         }
+    }
+
+    @Override
+    public void debug(String message) {
+        log(LogLevelEnum.DEBUG, message);
+    }
+
+    @Override
+    public void info(String message) {
+        log(LogLevelEnum.INFO, message);
+    }
+
+    @Override
+    public void warning(String message) {
+        log(LogLevelEnum.WARNING, message);
+    }
+
+    @Override
+    public void error(String message) {
+        log(LogLevelEnum.ERROR, message);
     }
 }
