@@ -1,5 +1,6 @@
 package cz.codecamp.logger;
 
+import cz.codecamp.logger.loggers.FileLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
 import java.util.Collections;
@@ -22,7 +23,8 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+        //LoggerInterface logger = new StdoutLogger();
+        LoggerInterface logger = new FileLogger();
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
