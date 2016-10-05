@@ -3,23 +3,46 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class FileLogger implements LoggerInterface {
+public class FileLogger implements LoggerInterface, Closeable {
+
+    private PrintStream fileStream;
+
+    public FileLogger() {
+        try {
+            fileStream = new PrintStream( new FileOutputStream(new File("application.log"), true));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        try {
-            PrintStream fileStream = new PrintStream( new FileOutputStream(new File("application.log"), true));
-            fileStream.printf("[%s]: %s\n", level.name(), message);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        fileStream.printf("[%s]: %s\n", level.name(), message);
+    }
+
+    /**
+     * Closes this stream and releases any system resources associated
+     * with it. If the stream is already closed then invoking this
+     * method has no effect.
+     * <p>
+     * <p> As noted in {@link AutoCloseable#close()}, cases where the
+     * close may fail require careful attention. It is strongly advised
+     * to relinquish the underlying resources and to internally
+     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
+     * the {@code IOException}.
+     *
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    public void close() throws IOException {
+        if (fileStream != null){
+            fileStream.flush();
+            fileStream.close();
         }
     }
 }
