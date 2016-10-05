@@ -1,8 +1,13 @@
 package cz.codecamp.logger;
 
+
 public enum LogLevelEnum {
     DEBUG,
     INFO,
     WARNING,
-    ERROR
+    ERROR;
+
+    public boolean isLowerOrEqualTo(LogLevelEnum other) {
+        return this.ordinal() <= other.ordinal();
+    }
 }

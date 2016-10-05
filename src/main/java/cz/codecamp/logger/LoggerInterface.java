@@ -1,5 +1,11 @@
 package cz.codecamp.logger;
 
-public interface LoggerInterface {
+import java.io.Closeable;
+
+public interface LoggerInterface extends Closeable {
     void log(LogLevelEnum level, String message);
+
+    void setFormatter(FormatterInterface formatter);
+
+    void setMinLogLevel(LogLevelEnum minLogLevel);
 }
