@@ -18,6 +18,8 @@ public class FileLogger implements LoggerInterface {
             stream = new PrintStream(new FileOutputStream(new File("application.log")), true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            stream.close();
         }
     }
 
@@ -25,6 +27,5 @@ public class FileLogger implements LoggerInterface {
     public void log(LogLevelEnum level, String message) {
         stream.append(level.name() + " " + message);
         stream.append("\n");
-
     }
 }
