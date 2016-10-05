@@ -1,6 +1,7 @@
 package cz.codecamp.logger;
 
 import cz.codecamp.logger.loggers.FileLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
 import cz.codecamp.logger.loggers.PrintStreamLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
@@ -24,7 +25,7 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new PrintStreamLogger(new StdoutLogger());
+        LoggerInterface logger = new MultiLogger(new FileLogger());
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
