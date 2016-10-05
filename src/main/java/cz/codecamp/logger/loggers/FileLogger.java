@@ -25,7 +25,7 @@ public class FileLogger implements PragmaticLoggerInterface {
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        System.out.printf("[%s] [%s]: %s\n", level.name(), dt.format(new Date()), message);
+        stream.printf("[%s] [%s]: %s\n", level.name(), dt.format(new Date()), message);
     }
 
     @Override
