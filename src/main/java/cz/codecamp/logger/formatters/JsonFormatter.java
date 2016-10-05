@@ -1,10 +1,8 @@
 package cz.codecamp.logger.formatters;
 
+import com.google.gson.Gson;
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
-import com.google.code.gson.*;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by micha on 05.10.2016.
