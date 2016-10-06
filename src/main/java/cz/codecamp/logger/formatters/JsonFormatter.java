@@ -15,6 +15,13 @@ public class JsonFormatter implements FormatterInterface {
         return gson.toJson(row);
     }
 
+    @Override
+    public String format(LogLevelEnum level, String message, String callingClass, int callingLineNumber) {
+        Gson gson = new Gson();
+        EnhancedRow row = new EnhancedRow(level.name(), "" + System.currentTimeMillis(), message, callingClass, "" + callingLineNumber);
+        return gson.toJson(row);
+    }
+
     private class Row {
         String lvl;
         String ts;
@@ -24,6 +31,17 @@ public class JsonFormatter implements FormatterInterface {
             this.lvl = lvl;
             this.ts = ts;
             this.msg = msg;
+        }
+    }
+
+    private class EnhancedRow extends Row {
+        String cls;
+        String line;
+
+        public EnhancedRow(String lvl, String ts, String msg, String cls, String line) {
+            super(lvl, ts, msg);
+            this.cls = cls;
+            this.line = line;
         }
     }
 }

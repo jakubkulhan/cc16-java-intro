@@ -9,7 +9,7 @@ public class StdoutLogger extends BaseLogger implements LoggerInterface {
 
     @Override
     protected void logFormatted(LogLevelEnum level, String originalMessage, String formattedMessage) {
-        System.out.printf(formattedMessage); // "[%s]: %s\n", level.name(),
+        System.out.print(formattedMessage); // "[%s]: %s\n", level.name(),
     }
 
     @Override

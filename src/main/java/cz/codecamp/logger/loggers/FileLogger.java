@@ -5,41 +5,51 @@ import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by micha on 05.10.2016.
  */
 public class FileLogger extends BaseLogger implements LoggerInterface {
-    private final PrintStreamLogger printStreamLogger;
+    private static final String FORMAT_DATE = "yyyy-MM-dd";
+    private LocalDateTime lastDateTime = null;
+    private Writer writer = null;
 
     public FileLogger() {
-        try {
-            printStreamLogger = new PrintStreamLogger(
-                    new PrintStream(new FileOutputStream(new File("application.log"), true)));
-        } catch (FileNotFoundException e) {
-            throw new IllegalStateException("New file not found, wtf.", e);
-        }
     }
 
     @Override
     protected void logFormatted(LogLevelEnum level, String originalMessage, String formattedMessage) {
-        printStreamLogger.log(level, formattedMessage);
+        try {
+            getFileWriter().append(formattedMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void close() throws IOException {
-        printStreamLogger.close();
+        getFileWriter().close();
     }
 
     @Override
     public void setFormatter(FormatterInterface formatter) {
-        printStreamLogger.setFormatter(formatter);
         super.setFormatter(formatter);
     }
 
     @Override
     public void setMinLogLevel(LogLevelEnum minLogLevel) {
-        printStreamLogger.setMinLogLevel(minLogLevel);
         super.setMinLogLevel(minLogLevel);
+    }
+
+    private Writer getFileWriter() throws IOException {
+        LocalDateTime now = LocalDateTime.now();
+        if (lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear()) {
+            lastDateTime = now;
+            writer = new FileWriter("application_" + lastDateTime.format(DateTimeFormatter.ofPattern(FORMAT_DATE)) + ".log");
+        }
+        return writer;
     }
 }
