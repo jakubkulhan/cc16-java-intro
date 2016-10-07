@@ -1,9 +1,11 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.*;
+import java.net.URI;
 import java.util.Date;
 
 /**
@@ -12,12 +14,23 @@ import java.util.Date;
 public class FileLogger extends AbstractLogger implements Closeable, PragmaticLoggerInterface {
     private PrintStream fileStream;
 
-    public FileLogger() {
+    public FileLogger(URI logFilePath) {
+        super();
         try {
-            fileStream = new PrintStream(new FileOutputStream(new File("application.log"), true));
+            fileStream = new PrintStream(new FileOutputStream(new File(logFilePath), true));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Logger with custom formatter
+     *
+     * @param formatter
+     */
+    public FileLogger(FormatterInterface formatter, PrintStream fileStream) {
+        super(formatter);
+        this.fileStream = fileStream;
     }
 
     @Override

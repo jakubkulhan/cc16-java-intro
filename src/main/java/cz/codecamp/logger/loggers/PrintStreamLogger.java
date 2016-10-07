@@ -1,5 +1,6 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
@@ -15,6 +16,17 @@ public class PrintStreamLogger extends AbstractLogger implements Closeable, Prag
     private PrintStream stream;
 
     public PrintStreamLogger(PrintStream stream) {
+        super();
+        this.stream = stream;
+    }
+
+    /**
+     * Logger with custom formatter
+     *
+     * @param formatter
+     */
+    public PrintStreamLogger(FormatterInterface formatter, PrintStream stream) {
+        super(formatter);
         this.stream = stream;
     }
 

@@ -1,5 +1,6 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
@@ -14,6 +15,17 @@ public class MultiLogger extends AbstractLogger implements PragmaticLoggerInterf
     private List<LoggerInterface> loggers;
 
     public MultiLogger(List<LoggerInterface> loggers) {
+        super();
+        this.loggers = loggers;
+    }
+
+    /**
+     * Logger with custom formatter
+     *
+     * @param formatter
+     */
+    public MultiLogger(FormatterInterface formatter, List<LoggerInterface> loggers) {
+        super(formatter);
         this.loggers = loggers;
     }
 

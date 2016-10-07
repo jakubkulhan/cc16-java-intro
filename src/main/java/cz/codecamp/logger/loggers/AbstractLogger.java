@@ -8,13 +8,13 @@ import cz.codecamp.logger.formatters.StringFormatter;
 import java.text.SimpleDateFormat;
 
 public abstract class AbstractLogger implements LoggerInterface, FormatterInterface {
-    private FormatterInterface formatter;
+    private FormatterInterface formatter = new StringFormatter();
 
     /**
      * Logger with default StringFormatter
      */
     protected AbstractLogger() {
-        this.formatter = new StringFormatter();
+
     }
 
     /**

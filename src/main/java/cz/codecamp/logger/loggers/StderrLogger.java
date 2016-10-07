@@ -4,14 +4,12 @@ import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
-import java.util.Date;
-
-public class StdoutLogger extends AbstractLogger implements PragmaticLoggerInterface {
+public class StderrLogger extends AbstractLogger implements PragmaticLoggerInterface {
 
     /**
      * Logger with default StringFormatter
      */
-    public StdoutLogger() {
+    public StderrLogger() {
         super();
     }
 
@@ -20,12 +18,12 @@ public class StdoutLogger extends AbstractLogger implements PragmaticLoggerInter
      *
      * @param formatter
      */
-    public StdoutLogger(FormatterInterface formatter) {
+    public StderrLogger(FormatterInterface formatter) {
         super(formatter);
     }
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        System.out.println(format(level, message));
+        System.err.println(format(level, message));
     }
 }
