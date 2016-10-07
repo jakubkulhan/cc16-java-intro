@@ -1,22 +1,19 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class FileLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
+public class FileLogger extends AbstractLogger implements Closeable, PragmaticLoggerInterface {
     private PrintStream fileStream;
 
     public FileLogger() {
         try {
-
             fileStream = new PrintStream(new FileOutputStream(new File("application.log"), true));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -25,7 +22,7 @@ public class FileLogger implements LoggerInterface, Closeable, PragmaticLoggerIn
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        fileStream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
+        fileStream.println(format(level, message));
     }
 
     /**

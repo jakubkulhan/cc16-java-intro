@@ -1,7 +1,6 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.Closeable;
@@ -12,7 +11,7 @@ import java.util.Date;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
+public class PrintStreamLogger extends AbstractLogger implements Closeable, PragmaticLoggerInterface {
     private PrintStream stream;
 
     public PrintStreamLogger(PrintStream stream) {
@@ -21,7 +20,7 @@ public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticL
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        stream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
+        stream.println(format(level, message));
     }
 
     /**
