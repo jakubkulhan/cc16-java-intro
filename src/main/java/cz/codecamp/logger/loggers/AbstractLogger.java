@@ -1,14 +1,17 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.intro.InnerClasses;
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 import cz.codecamp.logger.formatters.StringFormatter;
 
 import java.text.SimpleDateFormat;
 
-public abstract class AbstractLogger implements LoggerInterface, FormatterInterface {
+public abstract class AbstractLogger implements LoggerInterface, PragmaticLoggerInterface, FormatterInterface {
     private FormatterInterface formatter = new StringFormatter();
+    private LogLevelEnum threshold = LogLevelEnum.DEBUG;
 
     /**
      * Logger with default StringFormatter
@@ -38,6 +41,20 @@ public abstract class AbstractLogger implements LoggerInterface, FormatterInterf
     }
 
     /**
+     * Log message
+     * @param level
+     * @param message
+     */
+    @Override
+    public void log(LogLevelEnum level, String message) {
+        if (level.getLevel() >= getThreshold().getLevel()){
+            internalLog(level, message);
+        }
+    }
+
+    public abstract void internalLog(LogLevelEnum level, String message);
+
+    /**
      * Gets current formatter
      * @return
      */
@@ -54,9 +71,20 @@ public abstract class AbstractLogger implements LoggerInterface, FormatterInterf
     }
 
     /**
-     * Log message
-     * @param level
-     * @param message
+     * Gets threshold
+     * @return
      */
-    public abstract void log(LogLevelEnum level, String message);
+    @Override
+    public LogLevelEnum getThreshold() {
+        return threshold;
+    }
+
+    /**
+     * Sets threshold
+     * @param threshold
+     */
+    @Override
+    public void setThreshold(LogLevelEnum threshold) {
+        this.threshold = threshold;
+    }
 }

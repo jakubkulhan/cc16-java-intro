@@ -1,6 +1,7 @@
 package cz.codecamp.logger;
 
 import cz.codecamp.logger.formatters.JsonFormatter;
+import cz.codecamp.logger.formatters.StringFormatter;
 import cz.codecamp.logger.loggers.AbstractLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
@@ -24,7 +25,8 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        AbstractLogger logger = new StdoutLogger(new JsonFormatter());
+        AbstractLogger logger = new StdoutLogger(new StringFormatter());
+        logger.setThreshold(LogLevelEnum.WARNING);
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");

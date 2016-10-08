@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class PrintStreamLogger extends AbstractLogger implements Closeable, PragmaticLoggerInterface {
+public class PrintStreamLogger extends AbstractLogger implements Closeable {
     private PrintStream stream;
 
     public PrintStreamLogger(PrintStream stream) {
@@ -31,7 +31,7 @@ public class PrintStreamLogger extends AbstractLogger implements Closeable, Prag
     }
 
     @Override
-    public void log(LogLevelEnum level, String message) {
+    public void internalLog(LogLevelEnum level, String message) {
         stream.println(format(level, message));
     }
 

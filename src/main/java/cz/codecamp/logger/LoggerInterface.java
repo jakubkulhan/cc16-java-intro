@@ -4,4 +4,8 @@ import java.text.SimpleDateFormat;
 
 public interface LoggerInterface {
     void log(LogLevelEnum level, String message);
+
+    LogLevelEnum getThreshold();
+
+    void setThreshold(LogLevelEnum threshold);
 }

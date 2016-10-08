@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class FileLogger extends AbstractLogger implements Closeable, PragmaticLoggerInterface {
+public class FileLogger extends AbstractLogger implements Closeable {
     private PrintStream fileStream;
 
     public FileLogger(URI logFilePath) {
@@ -33,8 +33,14 @@ public class FileLogger extends AbstractLogger implements Closeable, PragmaticLo
         this.fileStream = fileStream;
     }
 
+
+    /**
+     *
+     * @param level
+     * @param message
+     */
     @Override
-    public void log(LogLevelEnum level, String message) {
+    public void internalLog(LogLevelEnum level, String message) {
         fileStream.println(format(level, message));
     }
 

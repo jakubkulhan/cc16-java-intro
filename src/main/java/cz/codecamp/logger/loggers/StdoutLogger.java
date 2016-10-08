@@ -6,7 +6,7 @@ import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.util.Date;
 
-public class StdoutLogger extends AbstractLogger implements PragmaticLoggerInterface {
+public class StdoutLogger extends AbstractLogger{
 
     /**
      * Logger with default StringFormatter
@@ -25,7 +25,7 @@ public class StdoutLogger extends AbstractLogger implements PragmaticLoggerInter
     }
 
     @Override
-    public void log(LogLevelEnum level, String message) {
+    public void internalLog(LogLevelEnum level, String message) {
         System.out.println(format(level, message));
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class MultiLogger extends AbstractLogger implements PragmaticLoggerInterface {
+public class MultiLogger extends AbstractLogger {
 
     private List<LoggerInterface> loggers;
 
@@ -30,7 +30,7 @@ public class MultiLogger extends AbstractLogger implements PragmaticLoggerInterf
     }
 
     @Override
-    public void log(LogLevelEnum level, String message)
+    public void internalLog(LogLevelEnum level, String message)
     {
         // Varinata 1
 //        for (LoggerInterface logger : loggers) {

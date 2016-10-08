@@ -4,7 +4,7 @@ import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
-public class StderrLogger extends AbstractLogger implements PragmaticLoggerInterface {
+public class StderrLogger extends AbstractLogger {
 
     /**
      * Logger with default StringFormatter
@@ -23,7 +23,7 @@ public class StderrLogger extends AbstractLogger implements PragmaticLoggerInter
     }
 
     @Override
-    public void log(LogLevelEnum level, String message) {
+    public void internalLog(LogLevelEnum level, String message) {
         System.err.println(format(level, message));
     }
 }

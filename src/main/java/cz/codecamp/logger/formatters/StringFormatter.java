@@ -2,6 +2,9 @@ package cz.codecamp.logger.formatters;
 
 import cz.codecamp.logger.LogLevelEnum;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by vkorecky on 7.10.16.
  */
