@@ -1,8 +1,10 @@
 package cz.codecamp.logger;
 
 public interface PragmaticLoggerInterface extends LoggerInterface {
+
     /**
      * Logs DEBUG message
+     *
      * @param message
      */
     default void debug(String message) {
@@ -11,6 +13,7 @@ public interface PragmaticLoggerInterface extends LoggerInterface {
 
     /**
      * Logs INFO message
+     *
      * @param message
      */
     default void info(String message) {
@@ -19,6 +22,7 @@ public interface PragmaticLoggerInterface extends LoggerInterface {
 
     /**
      * Logs WARNING message
+     *
      * @param message
      */
     default void warning(String message) {
@@ -27,6 +31,7 @@ public interface PragmaticLoggerInterface extends LoggerInterface {
 
     /**
      * Logs ERROR message
+     *
      * @param message
      */
     default void error(String message) {

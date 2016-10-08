@@ -2,16 +2,14 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.PragmaticLoggerInterface;
-
 import java.io.*;
 import java.net.URI;
-import java.util.Date;
 
 /**
  * Created by vkorecky on 4.10.16.
  */
 public class FileLogger extends AbstractLogger implements Closeable {
+
     private PrintStream fileStream;
 
     public FileLogger(URI logFilePath) {
@@ -33,33 +31,32 @@ public class FileLogger extends AbstractLogger implements Closeable {
         this.fileStream = fileStream;
     }
 
-
     /**
      *
      * @param level
      * @param message
      */
     @Override
-    public void internalLog(LogLevelEnum level, String message) {
-        fileStream.println(format(level, message));
+    public void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
+        fileStream.println(format(level, message, callersClassName, callersMethodName, callersLineNumber));
     }
 
     /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
+     * Closes this stream and releases any system resources associated with it.
+     * If the stream is already closed then invoking this method has no effect.
      * <p>
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
+     * <p>
+     * As noted in {@link AutoCloseable#close()}, cases where the close may fail
+     * require careful attention. It is strongly advised to relinquish the
+     * underlying resources and to internally
+     * <em>mark</em> the {@code Closeable} as closed, prior to throwing the
+     * {@code IOException}.
      *
      * @throws IOException if an I/O error occurs
      */
     @Override
     public void close() throws IOException {
-        if (fileStream != null){
+        if (fileStream != null) {
             fileStream.flush();
             fileStream.close();
         }

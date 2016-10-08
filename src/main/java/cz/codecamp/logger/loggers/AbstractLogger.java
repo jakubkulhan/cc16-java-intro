@@ -1,15 +1,13 @@
 package cz.codecamp.logger.loggers;
 
-import cz.codecamp.intro.InnerClasses;
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 import cz.codecamp.logger.formatters.StringFormatter;
 
-import java.text.SimpleDateFormat;
-
 public abstract class AbstractLogger implements LoggerInterface, PragmaticLoggerInterface, FormatterInterface {
+    
     private FormatterInterface formatter = new StringFormatter();
     private LogLevelEnum threshold = LogLevelEnum.DEBUG;
 
@@ -17,11 +15,12 @@ public abstract class AbstractLogger implements LoggerInterface, PragmaticLogger
      * Logger with default StringFormatter
      */
     protected AbstractLogger() {
-
+        
     }
 
     /**
      * Logger with custom formatter
+     *
      * @param formatter
      */
     protected AbstractLogger(FormatterInterface formatter) {
@@ -36,26 +35,41 @@ public abstract class AbstractLogger implements LoggerInterface, PragmaticLogger
      * @return
      */
     @Override
-    public String format(LogLevelEnum level, String message) {
-        return getFormatter().format(level, message);
+    public String format(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
+        return getFormatter().format(level, message, callersClassName, callersMethodName, callersLineNumber);
     }
 
     /**
      * Log message
+     *
      * @param level
      * @param message
      */
     @Override
     public void log(LogLevelEnum level, String message) {
-        if (level.getLevel() >= getThreshold().getLevel()){
-            internalLog(level, message);
+        if (level.getLevel() >= getThreshold().getLevel()) {
+
+
+            String callersClassName = null;
+            String callersMethodName = null;
+            int callersLineNumber = -1;
+            for (int i = 1; i<Thread.currentThread().getStackTrace().length; i++) {
+                callersClassName = Thread.currentThread().getStackTrace()[i].getClassName();
+                if ((!callersClassName.startsWith("cz.codecamp.logger.loggers")) && (!callersClassName.startsWith("cz.codecamp.logger.formatters"))) {
+                    callersMethodName = Thread.currentThread().getStackTrace()[i].getMethodName();
+                    callersLineNumber = Thread.currentThread().getStackTrace()[i].getLineNumber();
+                    break;
+                }
+            }
+            internalLog(level, message, callersClassName, callersMethodName, callersLineNumber);
         }
     }
-
-    public abstract void internalLog(LogLevelEnum level, String message);
+    
+    public abstract void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber);
 
     /**
      * Gets current formatter
+     *
      * @return
      */
     public FormatterInterface getFormatter() {
@@ -64,6 +78,7 @@ public abstract class AbstractLogger implements LoggerInterface, PragmaticLogger
 
     /**
      * Sets current formatter
+     *
      * @param formatter
      */
     public void setFormatter(FormatterInterface formatter) {
@@ -72,6 +87,7 @@ public abstract class AbstractLogger implements LoggerInterface, PragmaticLogger
 
     /**
      * Gets threshold
+     *
      * @return
      */
     @Override
@@ -81,6 +97,7 @@ public abstract class AbstractLogger implements LoggerInterface, PragmaticLogger
 
     /**
      * Sets threshold
+     *
      * @param threshold
      */
     @Override

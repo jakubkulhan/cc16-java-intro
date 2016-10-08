@@ -3,8 +3,6 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
-import cz.codecamp.logger.PragmaticLoggerInterface;
-
 import java.util.List;
 
 /**
@@ -30,8 +28,7 @@ public class MultiLogger extends AbstractLogger {
     }
 
     @Override
-    public void internalLog(LogLevelEnum level, String message)
-    {
+    public void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
         // Varinata 1
 //        for (LoggerInterface logger : loggers) {
 //            logger.log(level, message);

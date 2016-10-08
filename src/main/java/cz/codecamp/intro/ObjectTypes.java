@@ -3,6 +3,7 @@ package cz.codecamp.intro;
 public class ObjectTypes {
 
     public static class Person {
+
         String name;
         int age;
     }

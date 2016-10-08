@@ -2,7 +2,6 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.PragmaticLoggerInterface;
 
 public class StderrLogger extends AbstractLogger {
 
@@ -23,7 +22,7 @@ public class StderrLogger extends AbstractLogger {
     }
 
     @Override
-    public void internalLog(LogLevelEnum level, String message) {
-        System.err.println(format(level, message));
+    public void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
+        System.err.println(format(level, message, callersClassName, callersMethodName, callersLineNumber));
     }
 }

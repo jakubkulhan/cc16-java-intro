@@ -1,13 +1,16 @@
 package cz.codecamp.logger;
 
-import java.text.SimpleDateFormat;
-
 public interface FormatterInterface {
+
     /**
      * Format message
+     *
      * @param level
      * @param message
+     * @param callersClassName
+     * @param callersMethodName
+     * @param callersLineNumber
      * @return
      */
-    String format(LogLevelEnum level, String message);
+    String format(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber);
 }
