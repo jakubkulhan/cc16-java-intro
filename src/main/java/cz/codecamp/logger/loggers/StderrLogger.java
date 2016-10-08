@@ -3,12 +3,12 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
 
-public class StdoutLogger extends AbstractLogger {
+public class StderrLogger extends AbstractLogger {
 
     /**
      * Logger with default StringFormatter
      */
-    public StdoutLogger() {
+    public StderrLogger() {
         super();
     }
 
@@ -17,12 +17,12 @@ public class StdoutLogger extends AbstractLogger {
      *
      * @param formatter
      */
-    public StdoutLogger(FormatterInterface formatter) {
+    public StderrLogger(FormatterInterface formatter) {
         super(formatter);
     }
-    
+
     @Override
     public void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
-        System.out.println(format(level, message, callersClassName, callersMethodName, callersLineNumber));
+        System.err.println(format(level, message, callersClassName, callersMethodName, callersLineNumber));
     }
 }

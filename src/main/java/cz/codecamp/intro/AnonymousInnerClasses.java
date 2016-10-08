@@ -1,6 +1,7 @@
 package cz.codecamp.intro;
 
 public class AnonymousInnerClasses {
+
     public static void main(String[] args) throws InterruptedException {
 
         Thread[] threads = new Thread[10];

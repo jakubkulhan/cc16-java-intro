@@ -1,7 +1,8 @@
 package cz.codecamp.logger;
 
+import cz.codecamp.logger.formatters.StringFormatter;
+import cz.codecamp.logger.loggers.AbstractLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,9 +23,10 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+        AbstractLogger logger = new StdoutLogger(new StringFormatter());
+        logger.setThreshold(LogLevelEnum.WARNING);
 
-        for (Scanner scanner = new Scanner(System.in); ; ) {
+        for (Scanner scanner = new Scanner(System.in);;) {
             System.out.print("> ");
 
             if (!scanner.hasNextLine()) {
@@ -48,5 +50,4 @@ public class LoggerTester {
             logger.log(level, parts[1]);
         }
     }
-
 }

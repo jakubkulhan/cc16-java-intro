@@ -43,11 +43,11 @@ public class DenseGenericVector<T> implements Iterable<T> {
     }
 
     public static void main(String[] args) {
-        DenseGenericVector<Float> floats =
-            new DenseGenericVector<>(Float.class, 3);
+        DenseGenericVector<Float> floats
+                = new DenseGenericVector<>(Float.class, 3);
 
-        DenseGenericVector<Integer> ints =
-            new DenseGenericVector<>(Integer.class, 3);
+        DenseGenericVector<Integer> ints
+                = new DenseGenericVector<>(Integer.class, 3);
 
         // ...
     }

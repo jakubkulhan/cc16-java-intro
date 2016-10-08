@@ -1,49 +1,62 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
-import cz.codecamp.logger.PragmaticLoggerInterface;
-
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.URI;
 
 /**
  * Created by vkorecky on 4.10.16.
  */
-public class FileLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
+public class FileLogger extends AbstractLogger implements Closeable {
+
     private PrintStream fileStream;
 
-    public FileLogger() {
+    public FileLogger(URI logFilePath) {
+        super();
         try {
-
-            fileStream = new PrintStream(new FileOutputStream(new File("application.log"), true));
+            fileStream = new PrintStream(new FileOutputStream(new File(logFilePath), true));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void log(LogLevelEnum level, String message) {
-        fileStream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
+    /**
+     * Logger with custom formatter
+     *
+     * @param formatter
+     */
+    public FileLogger(FormatterInterface formatter, PrintStream fileStream) {
+        super(formatter);
+        this.fileStream = fileStream;
     }
 
     /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
+     *
+     * @param level
+     * @param message
+     */
+    @Override
+    public void internalLog(LogLevelEnum level, String message, String callersClassName, String callersMethodName, int callersLineNumber) {
+        fileStream.println(format(level, message, callersClassName, callersMethodName, callersLineNumber));
+    }
+
+    /**
+     * Closes this stream and releases any system resources associated with it.
+     * If the stream is already closed then invoking this method has no effect.
      * <p>
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
+     * <p>
+     * As noted in {@link AutoCloseable#close()}, cases where the close may fail
+     * require careful attention. It is strongly advised to relinquish the
+     * underlying resources and to internally
+     * <em>mark</em> the {@code Closeable} as closed, prior to throwing the
+     * {@code IOException}.
      *
      * @throws IOException if an I/O error occurs
      */
     @Override
     public void close() throws IOException {
-        if (fileStream != null){
+        if (fileStream != null) {
             fileStream.flush();
             fileStream.close();
         }

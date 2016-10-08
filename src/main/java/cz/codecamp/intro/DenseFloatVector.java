@@ -47,7 +47,6 @@ public class DenseFloatVector implements Iterable<Float> {
         floats.forEach((f) -> System.out.println(f));
 
         // ...
-
         floats.forEach(System.out::println);
     }
 
