@@ -8,5 +8,5 @@ import java.text.SimpleDateFormat;
 
 public abstract class AbstractFormatter implements FormatterInterface {
 
-    final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("YYYY-MM-DDD hh:mm:ss");
+    final SimpleDateFormat timeFormat = new SimpleDateFormat("YYYY-MM-DDD hh:mm:ss");
 }
