@@ -1,6 +1,7 @@
 package cz.codecamp.logger;
 
 import cz.codecamp.logger.loggers.FileLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
 import java.io.FileNotFoundException;
@@ -41,7 +42,7 @@ public class LoggerTester {
 
         LoggerInterface logger;
         try {
-            logger = new FileLogger();
+            logger = new MultiLogger(new FileLogger(), new StdoutLogger());
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.err);
             System.exit(1);
