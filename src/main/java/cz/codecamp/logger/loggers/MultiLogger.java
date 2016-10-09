@@ -7,14 +7,9 @@ import cz.codecamp.logger.LoggerInterface;
  * Created by honzapua on 9.10.2016.
  */
 // chci aby zaroven soubor a stdout
-public class MultiLogger implements LoggerInterface {
+abstract class MultiLogger implements LoggerInterface {
 
-    private final LoggerInterface[] loggerInterfaces;
-
-    @Override
-    public void log(LogLevelEnum level, String message) {
-        throw new UnsupportedOperationException("Not implemented yet!");
-    }
+    protected final LoggerInterface[] loggerInterfaces; // udelal jsem protected kvuli tomu aby se tam dostalo z ImperativeMultiLogger
 
     //predam parametry v listu tj. pole ekvivalentni LoggerInterface[] loggerInterfaces.
     public MultiLogger(LoggerInterface... loggerInterfaces) {
