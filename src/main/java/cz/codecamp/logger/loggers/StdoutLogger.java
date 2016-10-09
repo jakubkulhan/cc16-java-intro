@@ -3,11 +3,10 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 
-public class StdoutLogger implements LoggerInterface {
+import java.io.PrintStream;
 
-    @Override
-    public void log(LogLevelEnum level, String message) {
-        System.out.printf("[%s]: %s\n", level.name(), message);
+public class StdoutLogger extends PrintStreamLogger {
+    public StdoutLogger() {
+        super(System.out); //odkazu se na object system out a stvorim logger
     }
-
 }
