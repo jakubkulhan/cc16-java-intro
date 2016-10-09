@@ -11,7 +11,7 @@ import java.io.PrintStream;
 /**
  * Created by Lenovo on 5.10.16.
  */
-public class PrintStreamLogger implements LoggerInterface, Closeable {
+public class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface, Closeable {
 private PrintStream printStream;
 
 public PrintStreamLogger(PrintStream printStream) {
@@ -30,5 +30,25 @@ public PrintStreamLogger(PrintStream printStream) {
             printStream.flush();
             printStream.close();
         }
+    }
+
+    @Override
+    public void debug(String message) {
+        printStream.printf("[%s]: %s\n", LogLevelEnum.DEBUG, message);
+    }
+
+    @Override
+    public void info(String message) {
+        printStream.printf("[%s]: %s\n", LogLevelEnum.INFO, message);
+    }
+
+    @Override
+    public void warning(String message) {
+        printStream.printf("[%s]: %s\n", LogLevelEnum.WARNING, message);
+    }
+
+    @Override
+    public void error(String message) {
+        printStream.printf("[%s]: %s\n", LogLevelEnum.ERROR, message);
     }
 }
