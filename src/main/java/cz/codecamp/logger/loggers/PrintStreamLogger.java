@@ -35,23 +35,5 @@ class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface { /
         stream.printf("[%s] %s%n", level.name(), message);
     }
 
-    @Override
-    public void debug(String message) {
-        log(LogLevelEnum.DEBUG, message);
-    }
 
-    @Override
-    public void info(String message) {
-        log(LogLevelEnum.INFO, message);
-    }
-
-    @Override
-    public void warning(String message) {
-        log(LogLevelEnum.WARNING, message);
-    }
-
-    @Override
-    public void error(String message) {
-        log(LogLevelEnum.ERROR, message);
-    }
 }

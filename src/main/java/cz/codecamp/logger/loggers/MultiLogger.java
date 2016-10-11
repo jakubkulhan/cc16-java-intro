@@ -17,23 +17,4 @@ abstract class MultiLogger implements LoggerInterface, PragmaticLoggerInterface 
         this.loggerInterfaces = loggerInterfaces;
     }
 
-    @Override
-    public void debug(String message) {
-        log(LogLevelEnum.DEBUG, message);
-    }
-
-    @Override
-    public void info(String message) {
-        log(LogLevelEnum.INFO, message);
-    }
-
-    @Override
-    public void warning(String message) {
-        log(LogLevelEnum.WARNING, message);
-    }
-
-    @Override
-    public void error(String message) {
-        log(LogLevelEnum.ERROR, message);
-    }
 }
