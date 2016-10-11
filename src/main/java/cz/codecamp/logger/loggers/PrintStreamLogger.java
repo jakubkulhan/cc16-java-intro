@@ -5,6 +5,8 @@ import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by honzapua on 9.10.2016.
@@ -32,7 +34,10 @@ class PrintStreamLogger implements PragmaticLoggerInterface { /* smazali jsme pu
 
     @Override
     public void log(LogLevelEnum level, String message) { //log je implementace interfacu
-        stream.printf("[%s] %s%n", level.name(), message);
+        SimpleDateFormat sdf = new SimpleDateFormat("Y-M-d H:m:s"); // nastudovat JavaDoc
+        String currentTime = sdf.format(new Date());
+
+        stream.printf("[%s] [%s] %s%n", level.name(), currentTime, message);
     }
 
 
