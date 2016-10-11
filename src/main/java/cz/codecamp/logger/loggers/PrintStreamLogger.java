@@ -2,6 +2,7 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.PrintStream;
 
@@ -20,8 +21,10 @@ import java.io.PrintStream;
 
 
     */
-class PrintStreamLogger implements LoggerInterface { /* smazali jsme public je to private package */
+class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface { /* smazali jsme public je to private package */
     private final PrintStream stream;
+
+    //implementace Pragmatic loggeru do interfacu. DOhledaji se PREDCI vsech loggeru. Kde to ma smysl implementovat.
 
     public PrintStreamLogger(PrintStream stream) {
         this.stream = stream;
@@ -30,5 +33,25 @@ class PrintStreamLogger implements LoggerInterface { /* smazali jsme public je t
     @Override
     public void log(LogLevelEnum level, String message) { //log je implementace interfacu
         stream.printf("[%s] %s%n", level.name(), message);
+    }
+
+    @Override
+    public void debug(String message) {
+        log(LogLevelEnum.DEBUG, message);
+    }
+
+    @Override
+    public void info(String message) {
+        log(LogLevelEnum.INFO, message);
+    }
+
+    @Override
+    public void warning(String message) {
+        log(LogLevelEnum.WARNING, message);
+    }
+
+    @Override
+    public void error(String message) {
+        log(LogLevelEnum.ERROR, message);
     }
 }
