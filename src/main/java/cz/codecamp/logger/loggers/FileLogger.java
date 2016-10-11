@@ -21,6 +21,6 @@ public class FileLogger implements LoggerInterface {
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        System.out.printf("[%s]: %s\n", level.name(), message);
+        printStream.printf("[%s]: %s\n", level.name(), message);
     }
 }

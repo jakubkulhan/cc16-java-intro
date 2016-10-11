@@ -1,6 +1,6 @@
 /.gradle
-/gradle/wrapper/gradle-wrapper.properties
 /build/
 /local.properties
 /.idea
+application.log
 
