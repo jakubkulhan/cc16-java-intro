@@ -9,25 +9,25 @@ import cz.codecamp.logger.LogLevelEnum;
  */
 public class JsonFormatter implements FormatterInterface {
     @Override
-    public String format(LogLevelEnum level, String message) {
+    public String format( LogLevelEnum level, String message ) {
         Gson gson = new Gson();
-        Row row = new Row(level.name(), "" + System.currentTimeMillis(), message);
-        return gson.toJson(row);
+        Row row = new Row( level.name(), System.currentTimeMillis(), message );
+        return gson.toJson( row );
     }
 
     @Override
-    public String format(LogLevelEnum level, String message, String callingClass, int callingLineNumber) {
+    public String format( LogLevelEnum level, String message, String callingClass, int callingLineNumber ) {
         Gson gson = new Gson();
-        EnhancedRow row = new EnhancedRow(level.name(), "" + System.currentTimeMillis(), message, callingClass, "" + callingLineNumber);
-        return gson.toJson(row);
+        EnhancedRow row = new EnhancedRow( level.name(), System.currentTimeMillis(), message, callingClass, callingLineNumber );
+        return gson.toJson( row );
     }
 
     private class Row {
         String lvl;
-        String ts;
+        long ts;
         String msg;
 
-        public Row(String lvl, String ts, String msg) {
+        public Row( String lvl, long ts, String msg ) {
             this.lvl = lvl;
             this.ts = ts;
             this.msg = msg;
@@ -36,10 +36,10 @@ public class JsonFormatter implements FormatterInterface {
 
     private class EnhancedRow extends Row {
         String cls;
-        String line;
+        int line;
 
-        public EnhancedRow(String lvl, String ts, String msg, String cls, String line) {
-            super(lvl, ts, msg);
+        public EnhancedRow( String lvl, long ts, String msg, String cls, int line ) {
+            super( lvl, ts, msg );
             this.cls = cls;
             this.line = line;
         }

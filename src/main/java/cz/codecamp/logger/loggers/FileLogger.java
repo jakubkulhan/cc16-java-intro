@@ -31,22 +31,15 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
 
     @Override
     public void close() throws IOException {
-        getFileWriter().close();
-    }
-
-    @Override
-    public void setFormatter( FormatterInterface formatter ) {
-        super.setFormatter( formatter );
-    }
-
-    @Override
-    public void setMinLogLevel( LogLevelEnum minLogLevel ) {
-        super.setMinLogLevel( minLogLevel );
+        if ( writer != null ) {
+            writer.close();
+            writer = null;
+        }
     }
 
     private Writer getFileWriter() throws IOException {
         LocalDateTime now = LocalDateTime.now();
-        if ( writer == null || lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear() ) {
+        if ( writer == null || lastDateTime == null || ( now.getDayOfYear() != lastDateTime.getDayOfYear() && now.getMonth() != lastDateTime.getMonth() && now.getYear() != now.getYear() ) ) {
             lastDateTime = now;
             writer = new BufferedWriter( new FileWriter( "application_" + lastDateTime.format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log", true ) );
         }
