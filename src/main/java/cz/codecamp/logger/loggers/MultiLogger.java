@@ -8,7 +8,7 @@ import cz.codecamp.logger.PragmaticLoggerInterface;
  * Created by honzapua on 9.10.2016.
  */
 // chci aby zaroven soubor a stdout
-abstract class MultiLogger implements LoggerInterface, PragmaticLoggerInterface {
+abstract class MultiLogger implements PragmaticLoggerInterface {
 
     protected final LoggerInterface[] loggerInterfaces; // udelal jsem protected kvuli tomu aby se tam dostalo z ImperativeMultiLogger
 

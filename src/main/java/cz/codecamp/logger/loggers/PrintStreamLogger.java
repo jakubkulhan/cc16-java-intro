@@ -21,7 +21,7 @@ import java.io.PrintStream;
 
 
     */
-class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface { /* smazali jsme public je to private package */
+class PrintStreamLogger implements PragmaticLoggerInterface { /* smazali jsme public je to private package */
     private final PrintStream stream;
 
     //implementace Pragmatic loggeru do interfacu. DOhledaji se PREDCI vsech loggeru. Kde to ma smysl implementovat.
