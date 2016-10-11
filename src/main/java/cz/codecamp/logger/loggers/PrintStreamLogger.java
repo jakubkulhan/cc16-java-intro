@@ -10,6 +10,9 @@ public class PrintStreamLogger implements LoggerInterface {
     private final PrintStream printstream;
 
     public PrintStreamLogger(PrintStream printstream) {
+        if (printstream == null) {
+            throw new IllegalArgumentException();
+        }
         this.printstream = printstream;
     }
 
@@ -17,5 +20,5 @@ public class PrintStreamLogger implements LoggerInterface {
     public void log(LogLevelEnum level, String message) {
         printstream.printf("[%s]: %s\n", level.name(), message);
     }
-    
+
 }
