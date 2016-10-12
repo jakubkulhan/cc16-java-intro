@@ -46,7 +46,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
 
     private Writer getFileWriter() throws IOException {
         LocalDateTime now = LocalDateTime.now();
-        if (lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear()) {
+        if (lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear()) { // isOpen? + append to file
             lastDateTime = now;
             writer = new FileWriter("application_" + lastDateTime.format(DateTimeFormatter.ofPattern(FORMAT_DATE)) + ".log");
         }
