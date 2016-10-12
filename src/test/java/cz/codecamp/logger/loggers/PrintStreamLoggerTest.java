@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,10 +20,10 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 
 /**
- * Created by blaha on 06.10.2016.
+ * Created by blaha on 12.10.2016.
  */
 @RunWith( Parameterized.class )
-public class StdoutLoggerTest {
+public class PrintStreamLoggerTest {
     private static final String TEXT_MESSAGE = "Test message";
     private static final FormatterInterface[] formatters = new FormatterInterface[]{ new SimpleFormatter(), new JsonFormatter() };
 
@@ -34,16 +35,15 @@ public class StdoutLoggerTest {
                 .collect( Collectors.toList() );
     }
 
-    private static final String FORMAT_DATE = "yyyy-MM-dd";
-
     final LogLevelEnum level;
     final String message;
     final FormatterInterface formatter;
     String formatted;
     ByteArrayOutputStream outContent;
-    StdoutLogger logger;
+    PrintStreamLogger logger;
+    MyPrintStream printStream;
 
-    public StdoutLoggerTest( LogLevelEnum level, String message, FormatterInterface formatter ) {
+    public PrintStreamLoggerTest( LogLevelEnum level, String message, FormatterInterface formatter ) {
         this.level = level;
         this.message = message;
         this.formatter = formatter;
@@ -51,10 +51,10 @@ public class StdoutLoggerTest {
 
     @Before
     public void setUp() throws Exception {
-        outContent = new ByteArrayOutputStream();
-        System.setOut( new PrintStream( outContent ) );
         formatted = formatter.format( level, message );
-        logger = new StdoutLogger();
+        outContent = new ByteArrayOutputStream();
+        printStream = new MyPrintStream( outContent );
+        logger = new PrintStreamLogger( printStream );
     }
 
     @Test
@@ -65,12 +65,26 @@ public class StdoutLoggerTest {
 
     @Test
     public void close() throws Exception {
-        // I don't expect this method to do anything
+        assertFalse( printStream.isClosed() );
         logger.close();
+        assertTrue( printStream.isClosed() );
     }
 
-    @After
-    public void tearDown() throws Exception {
-        System.setOut( null );
+    private static class MyPrintStream extends PrintStream {
+        private boolean closed = false;
+
+        public MyPrintStream( OutputStream out ) {
+            super( out );
+        }
+
+        @Override
+        public void close() {
+            super.close();
+            closed = true;
+        }
+
+        public boolean isClosed() {
+            return closed;
+        }
     }
 }

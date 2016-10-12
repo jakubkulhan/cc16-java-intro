@@ -1,13 +1,13 @@
 package cz.codecamp.logger.loggers;
 
-import cz.codecamp.logger.FormatterInterface;
+import com.sun.istack.internal.logging.Logger;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 
 import java.io.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
 
 /**
  * Created by micha on 05.10.2016.
@@ -21,35 +21,32 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
     }
 
     @Override
-    protected void logFormatted(LogLevelEnum level, String originalMessage, String formattedMessage) {
+    protected void logFormatted( LogLevelEnum level, String originalMessage, String formattedMessage ) {
         try {
-            getFileWriter().append(formattedMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
+            getFileWriter().append( formattedMessage ).append( System.lineSeparator() );
+        } catch ( IOException e ) {
+            Logger.getLogger( FileLogger.class ).log( Level.SEVERE, "Could not log into file: " + getFile().getAbsolutePath(), e );
         }
     }
 
     @Override
     public void close() throws IOException {
-        getFileWriter().close();
-    }
-
-    @Override
-    public void setFormatter(FormatterInterface formatter) {
-        super.setFormatter(formatter);
-    }
-
-    @Override
-    public void setMinLogLevel(LogLevelEnum minLogLevel) {
-        super.setMinLogLevel(minLogLevel);
+        if ( writer != null ) {
+            writer.close();
+            writer = null;
+        }
     }
 
     private Writer getFileWriter() throws IOException {
         LocalDateTime now = LocalDateTime.now();
-        if (lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear()) { // isOpen? + append to file
+        if ( writer == null || lastDateTime == null || ( now.getDayOfYear() != lastDateTime.getDayOfYear() && now.getMonth() != lastDateTime.getMonth() && now.getYear() != now.getYear() ) ) {
             lastDateTime = now;
-            writer = new FileWriter("application_" + lastDateTime.format(DateTimeFormatter.ofPattern(FORMAT_DATE)) + ".log");
+            writer = new BufferedWriter( new FileWriter( getFile(), true ) );
         }
         return writer;
+    }
+
+    private File getFile() {
+        return new File( "application_" + lastDateTime.format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
     }
 }

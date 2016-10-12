@@ -13,13 +13,13 @@ public class PrintStreamLogger extends BaseLogger implements LoggerInterface {
 
     private final PrintStream printStream;
 
-    public PrintStreamLogger(PrintStream printStream) {
+    public PrintStreamLogger( PrintStream printStream ) {
         this.printStream = printStream;
     }
 
     @Override
-    protected void logFormatted(LogLevelEnum level, String originalMessage, String formattedMessage) {
-        printStream.append(formattedMessage);
+    protected void logFormatted( LogLevelEnum level, String originalMessage, String formattedMessage ) {
+        printStream.append( formattedMessage ).append( System.lineSeparator() );
     }
 
     @Override

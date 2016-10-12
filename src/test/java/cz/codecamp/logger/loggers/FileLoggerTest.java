@@ -10,19 +10,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
 /**
- * Created by blaha on 06.10.2016.
+ * Created by blaha on 11.10.2016.
  */
 @RunWith( Parameterized.class )
-public class StdoutLoggerTest {
+public class FileLoggerTest {
     private static final String TEXT_MESSAGE = "Test message";
     private static final FormatterInterface[] formatters = new FormatterInterface[]{ new SimpleFormatter(), new JsonFormatter() };
 
@@ -40,10 +42,10 @@ public class StdoutLoggerTest {
     final String message;
     final FormatterInterface formatter;
     String formatted;
-    ByteArrayOutputStream outContent;
-    StdoutLogger logger;
+    FileLogger logger;
+    File logFile;
 
-    public StdoutLoggerTest( LogLevelEnum level, String message, FormatterInterface formatter ) {
+    public FileLoggerTest( LogLevelEnum level, String message, FormatterInterface formatter ) {
         this.level = level;
         this.message = message;
         this.formatter = formatter;
@@ -51,26 +53,37 @@ public class StdoutLoggerTest {
 
     @Before
     public void setUp() throws Exception {
-        outContent = new ByteArrayOutputStream();
-        System.setOut( new PrintStream( outContent ) );
+        logger = new FileLogger();
+        logFile = new File( "application_" + LocalDateTime.now().format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
+        try ( Writer writer = new FileWriter( logFile ) ) {
+            writer.write( "" );
+        }
         formatted = formatter.format( level, message );
-        logger = new StdoutLogger();
     }
 
     @Test
     public void logFormatted() throws Exception {
-        logger.logFormatted( level, message, formatted );
-        assertEquals( formatted + System.lineSeparator(), outContent.toString() );
+        logger.logFormatted( LogLevelEnum.INFO, message, formatted );
+        logger.close();
+        Scanner sc = new Scanner( new FileInputStream( logFile ) );
+        String line = sc.nextLine();
+        assertEquals( formatted, line );
     }
 
     @Test
     public void close() throws Exception {
-        // I don't expect this method to do anything
+        logger.logFormatted( LogLevelEnum.INFO, message, formatted );
+        Scanner sc = new Scanner( new FileInputStream( logFile ) );
+        // the log is empty before closing
+        assertFalse( sc.hasNext() );
         logger.close();
+        sc = new Scanner( new FileInputStream( logFile ) );
+        // the log is not empty after closing
+        assertTrue( sc.hasNext() );
     }
 
     @After
     public void tearDown() throws Exception {
-        System.setOut( null );
+        logFile.delete();
     }
 }
