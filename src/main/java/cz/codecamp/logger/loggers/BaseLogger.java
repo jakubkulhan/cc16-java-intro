@@ -48,11 +48,13 @@ public abstract class BaseLogger implements LoggerInterface {
     protected abstract void logFormatted(LogLevelEnum level, String originalMessage, String formattedMessage);
 
     private StackTraceElement getCallingStackTraceElement(StackTraceElement[] stackTrace) {
-        for (int i = 0; i < stackTrace.length; i++) {
-            if (stackTrace[i].getClassName().equals( BaseLogger.class.getName()) && stackTrace[i].getMethodName().equals("log")) {
-                return stackTrace[i + 1];
-            }
+        int i = 0;
+        while(stackTrace[i].getClass().getPackage().equals( BaseLogger.class.getPackage() )){
+            i++;
         }
-        throw new IllegalArgumentException("StackTrace does not contain log method!");
+        if(i < stackTrace.length){
+            return stackTrace[i];
+        }
+        throw new IllegalArgumentException("Could not find caller in the StackTrace.");
     }
 }

@@ -12,9 +12,9 @@ import java.util.Collection;
  */
 public class MultiLogger extends BaseLogger implements LoggerInterface {
 
-    private final Collection<LoggerInterface> loggers;
+    private final Collection<? extends LoggerInterface> loggers;
 
-    public MultiLogger( Collection<LoggerInterface> loggers ) {
+    public MultiLogger( Collection<? extends LoggerInterface> loggers ) {
         this.loggers = loggers;
     }
 
