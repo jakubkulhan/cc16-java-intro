@@ -19,40 +19,29 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by blaha on 11.10.2016.
  */
-@RunWith( Parameterized.class )
 public class FileLoggerTest {
     private static final String TEXT_MESSAGE = "Test message";
-    private static final FormatterInterface[] formatters = new FormatterInterface[]{ new SimpleFormatter(), new JsonFormatter() };
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.stream( LogLevelEnum.values() )
-                .flatMap( logLevelEnum -> Arrays.stream( formatters )
-                        .map( formatter -> new Object[]{ logLevelEnum, TEXT_MESSAGE, formatter } ) )
-                .collect( Collectors.toList() );
-    }
-
     private static final String FORMAT_DATE = "yyyy-MM-dd";
 
-    final LogLevelEnum level;
-    final String message;
-    final FormatterInterface formatter;
+    LogLevelEnum level;
+    FormatterInterface formatter;
     String formatted;
     FileLogger logger;
     File logFile;
 
-    public FileLoggerTest( LogLevelEnum level, String message, FormatterInterface formatter ) {
-        this.level = level;
-        this.message = message;
-        this.formatter = formatter;
+    public FileLoggerTest() {
     }
 
     @Before
     public void setUp() throws Exception {
+        level = LogLevelEnum.DEBUG;
+        formatter = mock( FormatterInterface.class );
+        // TODO
         logger = new FileLogger();
         logFile = new File( "application_" + LocalDateTime.now().format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
         try ( Writer writer = new FileWriter( logFile ) ) {
