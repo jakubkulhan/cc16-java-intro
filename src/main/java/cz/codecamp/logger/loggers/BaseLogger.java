@@ -26,8 +26,8 @@ public abstract class BaseLogger implements LoggerInterface {
     @Override
     public void log( LogLevelEnum level, String message ) {
         StackTraceElement stackTraceElement = getCallingStackTraceElement( Thread.currentThread().getStackTrace() );
-        if ( minLogLevel.isLowerOrEqualTo( level ) ) { // task #4
-            logFormatted( level, message, formatter.format( level, message, timeSupplier.get(), stackTraceElement.getClassName(), stackTraceElement.getLineNumber() ) ); // task #5
+        if ( getMinLogLevel().isLowerOrEqualTo( level ) ) { // task #4
+            logFormatted( level, message, getFormatter().format( level, message, getTimeSupplier().get(), stackTraceElement.getClassName(), stackTraceElement.getLineNumber() ) ); // task #5
         }
     }
 
