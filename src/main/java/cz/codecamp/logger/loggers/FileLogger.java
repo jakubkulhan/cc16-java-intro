@@ -66,6 +66,9 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
     private Writer getFileWriter() throws IOException {
         LocalDateTime now = LocalDateTimeUtils.fromMillis( getTimeSupplier().get() );
         if ( writer == null || lastDateTime == null || ( now.getDayOfYear() != lastDateTime.getDayOfYear() && now.getMonth() != lastDateTime.getMonth() && now.getYear() != now.getYear() ) ) {
+            if ( writer != null ) {
+                writer.close();
+            }
             lastDateTime = now;
             writer = new OutputStreamWriter( outputStreamSupplier.get( fileSupplier.apply( getTimeSupplier().get() ) ) );
         }
