@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class LoggerTester {
+    private LoggerTester() {
+    }
 
     private static final Map<String, LogLevelEnum> LEVEL_MAP;
 

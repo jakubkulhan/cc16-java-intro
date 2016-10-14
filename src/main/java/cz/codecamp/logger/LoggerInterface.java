@@ -1,14 +1,17 @@
 package cz.codecamp.logger;
 
 import java.io.Closeable;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface LoggerInterface extends Closeable {
-    void log(LogLevelEnum level, String message);
+    void log( LogLevelEnum level, String message );
 
-    void setFormatter(FormatterInterface formatter);
+    void setFormatter( FormatterInterface formatter );
 
-    void setMinLogLevel(LogLevelEnum minLogLevel);
+    void setMinLogLevel( LogLevelEnum minLogLevel );
 
-    void setTimeSupplier( Supplier<Long> timeSupplier);
+    void setTimeSupplier( Supplier<Long> timeSupplier );
+
+    void setStackTraceElementSupplier( Function<StackTraceElement[], StackTraceElement> supplier );
 }

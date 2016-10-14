@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.function.Function;
 import java.util.logging.Level;
 
 /**
@@ -17,11 +18,11 @@ import java.util.logging.Level;
  */
 public class FileLogger extends BaseLogger implements LoggerInterface {
     public static final String FORMAT_DATE = "yyyy-MM-dd";
-    public static FileSupplier DEFAULT_FILE_SUPPLIER = ( time ) -> new File( "application_" + LocalDateTimeUtils.fromMillis( time ).format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
+    public static Function<Long, File> DEFAULT_FILE_SUPPLIER = ( time ) -> new File( "application_" + LocalDateTimeUtils.fromMillis( time ).format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
     public static OutputStreamSupplier DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER = file -> new FileOutputStream( file, true );
     private LocalDateTime lastDateTime = LocalDateTime.ofInstant( Instant.ofEpochMilli( 0L ), ZoneId.systemDefault() );
     private Writer writer = null;
-    private FileSupplier fileSupplier;
+    private Function<Long, File> fileSupplier;
     private OutputStreamSupplier outputStreamSupplier;
 
     public FileLogger() {
@@ -29,7 +30,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
         this.outputStreamSupplier = DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER;
     }
 
-    public FileLogger( FileSupplier fileSupplier ) {
+    public FileLogger( Function<Long, File> fileSupplier ) {
         this.fileSupplier = fileSupplier;
         this.outputStreamSupplier = DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER;
     }
@@ -39,7 +40,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
         this.outputStreamSupplier = outputStreamSupplier;
     }
 
-    public FileLogger( FileSupplier fileSupplier, OutputStreamSupplier outputStreamSupplier ) {
+    public FileLogger( Function<Long, File> fileSupplier, OutputStreamSupplier outputStreamSupplier ) {
         this.fileSupplier = fileSupplier;
         this.outputStreamSupplier = outputStreamSupplier;
     }
@@ -49,7 +50,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
         try {
             getFileWriter().append( formattedMessage ).append( System.lineSeparator() ).flush();
         } catch ( IOException e ) {
-            // log error inside logger
+            throw new IllegalStateException( "Cannot write to file provided by the supplier: " + fileSupplier.apply( getTimeSupplier().get() ).getAbsolutePath() );
         }
 
     }
@@ -66,14 +67,11 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
         LocalDateTime now = LocalDateTimeUtils.fromMillis( getTimeSupplier().get() );
         if ( writer == null || lastDateTime == null || ( now.getDayOfYear() != lastDateTime.getDayOfYear() && now.getMonth() != lastDateTime.getMonth() && now.getYear() != now.getYear() ) ) {
             lastDateTime = now;
-            writer = new OutputStreamWriter( outputStreamSupplier.get( fileSupplier.get( getTimeSupplier().get() ) ) );
+            writer = new OutputStreamWriter( outputStreamSupplier.get( fileSupplier.apply( getTimeSupplier().get() ) ) );
         }
         return writer;
     }
 
-    public interface FileSupplier {
-        File get( long timeInMillis );
-    }
 
     public interface OutputStreamSupplier {
         OutputStream get( File file ) throws IOException;

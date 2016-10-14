@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.time.format.DateTimeFormatter;
+import java.util.function.Function;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -31,9 +32,33 @@ public class FileLoggerTest {
     }
 
     @Test
+    public void testEmptyConstructor() throws Exception {
+        // how to test properly? - everything instantiated?
+        new FileLogger();
+    }
+
+    @Test
+    public void testFileSupplierConstructor() throws Exception {
+        // how to test properly?
+        new FileLogger( FileLogger.DEFAULT_FILE_SUPPLIER );
+    }
+
+    @Test
+    public void testStreamSupplierConstructor() throws Exception {
+        // how to test properly?
+        new FileLogger( FileLogger.DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER );
+    }
+
+    @Test
+    public void testAllArgsConstructor() throws Exception {
+        // how to test properly?
+        new FileLogger( FileLogger.DEFAULT_FILE_SUPPLIER, FileLogger.DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER );
+    }
+
+    @Test
     public void defaultFileSupplier() throws Exception {
-        FileLogger.FileSupplier fileSupplier = FileLogger.DEFAULT_FILE_SUPPLIER;
-        File file = fileSupplier.get( millis );
+        Function<Long, File> fileSupplier = FileLogger.DEFAULT_FILE_SUPPLIER;
+        File file = fileSupplier.apply( millis );
         assertEquals( "application_" + LocalDateTimeUtils.fromMillis( millis ).format( DateTimeFormatter.ofPattern( FileLogger.FORMAT_DATE ) ) + ".log", file.getName() );
     }
 
@@ -48,6 +73,17 @@ public class FileLoggerTest {
         } );
         logger.logFormatted( LogLevelEnum.INFO, originalMessage, formattedMessage );
         assertEquals( formattedMessage + System.lineSeparator(), stream.toString() );
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void logFormattedWrongFile() throws Exception {
+        FileLogger logger = new FileLogger( new FileLogger.OutputStreamSupplier(){
+            @Override
+            public OutputStream get( File file ) throws IOException {
+                throw new IOException(  );
+            }
+        } );
+        logger.logFormatted( LogLevelEnum.INFO, originalMessage, formattedMessage );
     }
 
     @Test

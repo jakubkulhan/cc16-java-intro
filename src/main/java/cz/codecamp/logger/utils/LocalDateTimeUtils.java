@@ -7,7 +7,10 @@ import java.time.ZoneId;
 /**
  * Created by micha on 12.10.2016.
  */
-public class LocalDateTimeUtils {
+public final class LocalDateTimeUtils {
+    private LocalDateTimeUtils() {
+    }
+
     public static LocalDateTime fromMillis( long millis ) {
         return LocalDateTime.ofInstant( Instant.ofEpochMilli( millis ), ZoneId.systemDefault() );
     }
