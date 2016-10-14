@@ -20,7 +20,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
     public static final String FORMAT_DATE = "yyyy-MM-dd";
     public static Function<Long, File> DEFAULT_FILE_SUPPLIER = ( time ) -> new File( "application_" + LocalDateTimeUtils.fromMillis( time ).format( DateTimeFormatter.ofPattern( FORMAT_DATE ) ) + ".log" );
     public static OutputStreamSupplier DEFAULT_FILE_OUTPUTSTREAM_SUPPLIER = file -> new FileOutputStream( file, true );
-    private LocalDateTime lastDateTime = LocalDateTime.ofInstant( Instant.ofEpochMilli( 0L ), ZoneId.systemDefault() );
+    private LocalDateTime lastDateTime = null;
     private Writer writer = null;
     private Function<Long, File> fileSupplier;
     private OutputStreamSupplier outputStreamSupplier;
@@ -65,7 +65,7 @@ public class FileLogger extends BaseLogger implements LoggerInterface {
 
     private Writer getFileWriter() throws IOException {
         LocalDateTime now = LocalDateTimeUtils.fromMillis( getTimeSupplier().get() );
-        if ( writer == null || lastDateTime == null || ( now.getDayOfYear() != lastDateTime.getDayOfYear() && now.getMonth() != lastDateTime.getMonth() && now.getYear() != now.getYear() ) ) {
+        if ( writer == null || lastDateTime == null || now.getDayOfYear() != lastDateTime.getDayOfYear() || now.getMonth() != lastDateTime.getMonth() || now.getYear() != now.getYear() ) {
             if ( writer != null ) {
                 writer.close();
             }
