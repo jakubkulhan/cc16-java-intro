@@ -3,11 +3,17 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 
-public class StdoutLogger implements LoggerInterface {
+import java.io.IOException;
+
+public class StdoutLogger extends BaseLogger implements LoggerInterface {
 
     @Override
-    public void log(LogLevelEnum level, String message) {
-        System.out.printf("[%s]: %s\n", level.name(), message);
+    protected void logFormatted( LogLevelEnum level, String originalMessage, String formattedMessage ) {
+        System.out.println( formattedMessage );
     }
 
+    @Override
+    public void close() throws IOException {
+        // do nothing
+    }
 }
