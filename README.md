@@ -1,3 +1,5 @@
+## Look at my great code, it's really great and it's mine
+
 # Codecamp 2016 Java intro
 
 ## 1
