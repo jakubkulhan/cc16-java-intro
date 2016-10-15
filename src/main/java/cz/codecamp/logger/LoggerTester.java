@@ -2,6 +2,7 @@ package cz.codecamp.logger;
 
 import cz.codecamp.logger.loggers.StdoutLogger;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +10,8 @@ import java.util.Scanner;
 
 public class LoggerTester {
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); // pozor na velikost pismen
+    private static int minLogLevel = 4;
     private static final Map<String, LogLevelEnum> LEVEL_MAP;
 
     static {
@@ -20,7 +23,7 @@ public class LoggerTester {
         LEVEL_MAP = Collections.unmodifiableMap(levelMap);
     }
 
-    public static void main(String[] args) {
+    public static void main(String args) {
 
         LoggerInterface logger = new StdoutLogger();
 
@@ -45,7 +48,12 @@ public class LoggerTester {
                 continue;
             }
 
-            logger.log(level, parts[1]);
+            // Zalogovani pouze zprav od zvoleneho levelu (final int minLogLevel)
+            // level 1: log vseho
+            // level 2: log vseho bez DEBUG; loguje se INFO, WARNING, ERROR
+            // level 3: log vseho bez DEBUG, INFO; loguje se WARNING, ERROR
+            // level 4: log vseho bez DEBUG, INFO, WARNING; loguje se ERROR
+            logger.log(level, parts[1], minLogLevel);
         }
     }
 
