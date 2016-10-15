@@ -1,5 +1,5 @@
 package cz.codecamp.logger;
 
 public interface LoggerInterface {
-    void log(LogLevelEnum level, String message);
+    void log(LogLevelEnum level, String message, int minLogLevel);
 }
