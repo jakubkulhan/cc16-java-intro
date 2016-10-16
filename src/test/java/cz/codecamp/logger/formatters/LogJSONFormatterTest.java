@@ -1,5 +1,5 @@
 package cz.codecamp.logger.formatters;
-
+/*
 import cz.codecamp.logger.LogLevelEnum;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +12,6 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Filip Ocelka on 16.10.2016, filip.ocelka@gmail.com
- */
-/*
 @PrepareForTest(LogJSONFormatterTest.class)
 @RunWith(PowerMockRunner.class)
 public class LogJSONFormatterTest {
