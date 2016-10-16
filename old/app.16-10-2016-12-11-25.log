@@ -1,0 +1,3 @@
+[ERROR] [2016-10-16 12:11:25] pokus Class: cz.codecamp.logger.LoggerTester line: 66
+[WARNING] [2016-10-16 12:11:33] druhy pokus Class: cz.codecamp.logger.LoggerTester line: 66
+[INFO] [2016-10-16 12:11:45] treti pokus Class: cz.codecamp.logger.LoggerTester line: 66

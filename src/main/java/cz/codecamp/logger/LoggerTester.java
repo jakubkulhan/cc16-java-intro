@@ -1,11 +1,14 @@
 package cz.codecamp.logger;
 
+import cz.codecamp.logger.formatters.LogFormatter;
+import cz.codecamp.logger.formatters.LogJSONFormatter;
+import cz.codecamp.logger.formatters.LogWithoutTimeFormatter;
+import cz.codecamp.logger.loggers.FileLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
+import cz.codecamp.logger.loggers.PrintStreamLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class LoggerTester {
 
@@ -22,7 +25,22 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+        LoggerInterface stdoutLogger = new StdoutLogger();
+        LoggerInterface fileLogger = new FileLogger();
+        //LoggerInterface printStreamLogger = new PrintStreamLogger(System.out);
+
+        List<LoggerInterface> loggers = new ArrayList<LoggerInterface>();
+
+        loggers.add(stdoutLogger);
+        loggers.add(fileLogger);
+        //loggers.add(printStreamLogger);
+
+        LoggerInterface logger = new MultiLogger(loggers);
+        //LoggerInterface logger = new StdoutLogger();
+
+        logger.setLevel(LogLevelEnum.INFO);
+
+        FormatterInterface formatter = new LogFormatter();
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
@@ -45,7 +63,7 @@ public class LoggerTester {
                 continue;
             }
 
-            logger.log(level, parts[1]);
+            logger.log(level, parts[1], formatter);
         }
     }
 
