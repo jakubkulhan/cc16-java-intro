@@ -1,6 +1,7 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.FormatterInterface;
+import cz.codecamp.logger.LogLevelEnum;
 
 import java.io.*;
 
@@ -10,13 +11,14 @@ import java.io.*;
 
 public class FileLogger extends PrintStreamLogger {
 
-    public FileLogger(String fileName, FormatterInterface formater) throws FileNotFoundException {
+    public FileLogger(String fileName, FormatterInterface formater, LogLevelEnum threshold) throws FileNotFoundException {
         super(new PrintStream( //
                 new FileOutputStream(
                         new File(fileName), // jmeno souboru
                         true // vzdycky pridava kdyz existuje, neprepise ho
                 )
-        ), formater);
+        ), formater, threshold
+        );
     }
 
 

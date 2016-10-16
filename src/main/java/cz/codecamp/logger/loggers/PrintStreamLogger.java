@@ -24,18 +24,21 @@ import java.io.PrintStream;
 class PrintStreamLogger implements PragmaticLoggerInterface { /* smazali jsme public je to private package */
     private final PrintStream stream;
     private final FormatterInterface formater;
+    private final LogLevelEnum threshold;
 
     //implementace Pragmatic loggeru do interfacu. DOhledaji se PREDCI vsech loggeru. Kde to ma smysl implementovat.
 
-    public PrintStreamLogger(PrintStream stream, FormatterInterface formater) {
+    public PrintStreamLogger(PrintStream stream, FormatterInterface formater, LogLevelEnum threshold) {
         this.stream = stream; // inicializace finalu prave jednou s konstruktorem
         this.formater = formater;
+        this.threshold = threshold;
     }
-
-
 
     @Override
     public void log(LogLevelEnum level, String message) { //log je implementace interfacu
+        if (level.ordinal() < threshold.ordinal()) {
+            return;
+        }
 
         String line = formater.format(level, message);
         stream.println(line);
