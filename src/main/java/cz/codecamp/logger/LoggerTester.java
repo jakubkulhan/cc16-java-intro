@@ -2,6 +2,7 @@ package cz.codecamp.logger;
 
 import cz.codecamp.logger.loggers.FileLogger;
 import cz.codecamp.logger.loggers.ImperativeMultiLogger;
+import cz.codecamp.logger.loggers.StderrLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
 import java.io.FileNotFoundException;
@@ -46,7 +47,8 @@ public class LoggerTester {
             logger = new ImperativeMultiLogger(
                     new FileLogger("a.log", timeFormatter),
                     new FileLogger("b.log", singleFormatter),
-                    new StdoutLogger(timeFormatter)
+                    new StdoutLogger(singleFormatter),
+                    new StderrLogger(timeFormatter)
             );
 
         } catch (FileNotFoundException ex) {
