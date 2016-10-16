@@ -4,4 +4,4 @@
 .idea/
 out/
 **/*.iml
-application.log
+*.log
