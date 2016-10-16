@@ -1,8 +1,5 @@
 package cz.codecamp.logger.loggers;
 
-import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
-
 import java.io.*;
 
 /**
@@ -11,10 +8,10 @@ import java.io.*;
 
 public class FileLogger extends PrintStreamLogger {
 
-    public FileLogger() throws FileNotFoundException {
+    public FileLogger(String fileName) throws FileNotFoundException {
         super(new PrintStream( //
                 new FileOutputStream(
-                        new File("application.log"), // jmeno souboru
+                        new File(fileName), // jmeno souboru
                         true // vzdycky pridava kdyz existuje, neprepise ho
                 )
         ));

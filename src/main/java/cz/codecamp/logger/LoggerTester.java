@@ -42,7 +42,8 @@ public class LoggerTester {
 
         LoggerInterface logger;
         try {
-            logger = new ImperativeMultiLogger(new FileLogger(), new StdoutLogger());
+            logger = new ImperativeMultiLogger(new FileLogger("application.log"), new FileLogger("b.log"), new StdoutLogger());
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.err);
             System.exit(1);
