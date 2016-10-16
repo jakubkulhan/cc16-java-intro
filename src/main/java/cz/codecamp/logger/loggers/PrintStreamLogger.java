@@ -1,12 +1,10 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.FormatterInterface;
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by honzapua on 9.10.2016.
@@ -25,19 +23,22 @@ import java.util.Date;
     */
 class PrintStreamLogger implements PragmaticLoggerInterface { /* smazali jsme public je to private package */
     private final PrintStream stream;
+    private final FormatterInterface formater;
 
     //implementace Pragmatic loggeru do interfacu. DOhledaji se PREDCI vsech loggeru. Kde to ma smysl implementovat.
 
-    public PrintStreamLogger(PrintStream stream) {
-        this.stream = stream;
+    public PrintStreamLogger(PrintStream stream, FormatterInterface formater) {
+        this.stream = stream; // inicializace finalu prave jednou s konstruktorem
+        this.formater = formater;
     }
+
+
 
     @Override
     public void log(LogLevelEnum level, String message) { //log je implementace interfacu
-        SimpleDateFormat sdf = new SimpleDateFormat("Y-M-d H:m:s"); // nastudovat JavaDoc
-        String currentTime = sdf.format(new Date());
 
-        stream.printf("[%s] [%s] %s%n", level.name(), currentTime, message);
+        String line = formater.format(level, message);
+        stream.println(line);
     }
 
 

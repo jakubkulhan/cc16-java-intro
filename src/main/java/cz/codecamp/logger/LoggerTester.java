@@ -38,11 +38,15 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        //LoggerInterface logger = new StdoutLogger(); zbylo z ukolu 1
-
         LoggerInterface logger;
         try {
-            logger = new ImperativeMultiLogger(new FileLogger("application.log"), new FileLogger("b.log"), new StdoutLogger());
+            final FormatterInterface formater = new SingleFormatter();
+            // logger zere pole, ktere ma vice policek
+            logger = new ImperativeMultiLogger(
+                    new FileLogger("application.log", formater),
+                    new FileLogger("b.log", formater),
+                    new StdoutLogger(formater)
+            );
 
         } catch (FileNotFoundException ex) {
             ex.printStackTrace(System.err);
