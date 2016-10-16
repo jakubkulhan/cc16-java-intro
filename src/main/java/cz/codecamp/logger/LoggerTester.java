@@ -38,17 +38,16 @@ public class LoggerTester {
     }
 
     public static void main(String[] args) {
-        /** System.out.println(LogLevelEnum.WARNING.ordinal());
-            System.exit(0);
-         */
         LoggerInterface logger;
         try {
             final FormatterInterface singleFormatter = new SingleFormatter();
             final FormatterInterface timeFormatter = new TimeFormatter();
+            final RotationRule hourlyRotationRule = new HourlyRotationRule();
+
             // logger zere pole, ktere ma vice policek
             logger = new ImperativeMultiLogger(
-                    new FileLogger("a.log", timeFormatter, LogLevelEnum.DEBUG),
-                    new FileLogger("b.log", singleFormatter, LogLevelEnum.ERROR),
+                    new FileLogger("a.log", timeFormatter, LogLevelEnum.DEBUG, hourlyRotationRule),
+                    new FileLogger("b.log", singleFormatter, LogLevelEnum.ERROR, hourlyRotationRule),
                     new StdoutLogger(singleFormatter,LogLevelEnum.WARNING),
                     new StderrLogger(timeFormatter,LogLevelEnum.ERROR)
             );
