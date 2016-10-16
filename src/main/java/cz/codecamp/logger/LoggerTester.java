@@ -40,12 +40,13 @@ public class LoggerTester {
 
         LoggerInterface logger;
         try {
-            final FormatterInterface formater = new SingleFormatter();
+            final FormatterInterface singleFormatter = new SingleFormatter();
+            final FormatterInterface timeFormatter = new TimeFormatter();
             // logger zere pole, ktere ma vice policek
             logger = new ImperativeMultiLogger(
-                    new FileLogger("application.log", formater),
-                    new FileLogger("b.log", formater),
-                    new StdoutLogger(formater)
+                    new FileLogger("a.log", timeFormatter),
+                    new FileLogger("b.log", singleFormatter),
+                    new StdoutLogger(timeFormatter)
             );
 
         } catch (FileNotFoundException ex) {
