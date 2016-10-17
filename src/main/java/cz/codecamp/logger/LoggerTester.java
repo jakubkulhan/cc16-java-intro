@@ -1,6 +1,10 @@
 package cz.codecamp.logger;
 
-import cz.codecamp.logger.loggers.StdoutLogger;
+import cz.codecamp.logger.LogLevelEnum;
+import cz.codecamp.logger.formatters.CompleteFormatter;
+import cz.codecamp.logger.formatters.DateFormatter;
+import cz.codecamp.logger.formatters.NoDateFormatter;
+import cz.codecamp.logger.loggers.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +26,30 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+//        LoggerInterface logger = new StdoutLogger();
+//
+//        LoggerInterface logger = new FileLogger();
+//
+//        LoggerInterface logger = new PrintStreamLogger(System.out);
+//
+//        LoggerInterface logger = null;
+//        try {
+//            logger = new PrintStreamLogger(new PrintStream(new FileOutputStream(new File("application.log"), true)));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+        AbstractLogger stdoutLogger = new StdoutLogger(new NoDateFormatter());
+        AbstractLogger stdoutLogger1 = new StdoutLogger(new DateFormatter());
+        AbstractLogger stdoutLogger2 = new StdoutLogger(new CompleteFormatter());
+        //AbstractLogger stdoutLogger3 = new StdoutLogger(new JsonFormatter());
+        AbstractLogger stdoutLogger4 = new PrintSteamLoggerLevelComparison(System.out, new NoDateFormatter(), LogLevelEnum.WARNING);
+
+
+        AbstractLogger[] loggers = {stdoutLogger, stdoutLogger1/*, stdoutLogger3*/, stdoutLogger4};
+        AbstractLogger multiLogger = new MultiLogger(loggers);
+        AbstractLogger dayLogger = new DayLogger(System.getProperty("user.home") + "/desktop//system_logger", new DateFormatter());
+
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
@@ -45,8 +72,21 @@ public class LoggerTester {
                 continue;
             }
 
-            logger.log(level, parts[1]);
+            multiLogger.log(level, parts[1]);
+            stdoutLogger2.log(level, parts[1]);
+            dayLogger.log(level, parts[1]);
+            // stdoutLogger.debug(parts[1]);
+
+
+
+
+
+
+
         }
+
+
+
     }
 
 }
