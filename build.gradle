@@ -10,6 +10,15 @@ repositories {
     mavenCentral()
 }
 
+test {
+    beforeTest {
+        descriptor -> logger.lifecycle("Running test: ${descriptor}")
+    }
+}
+
 dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.4'
+
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.2.5'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
