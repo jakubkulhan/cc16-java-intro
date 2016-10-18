@@ -2,13 +2,14 @@ package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MultiLogger implements LoggerInterface {
+public class MultiLogger implements PragmaticLoggerInterface {
 
     private final List<LoggerInterface> loggers;
 
