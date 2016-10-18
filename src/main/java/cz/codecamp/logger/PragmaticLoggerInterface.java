@@ -1,7 +1,5 @@
 package cz.codecamp.logger;
 
-import java.text.SimpleDateFormat;
-
 public interface PragmaticLoggerInterface extends LoggerInterface {
 
     Formatter formatter = new Formatter();

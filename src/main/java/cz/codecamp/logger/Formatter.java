@@ -33,7 +33,7 @@ public class Formatter implements FormatterInterface {
         StackTraceElement element;
 
         while (iterator.hasNext()) {
-            if ((element = iterator.next()).getClassName().contains("cz.codecamp")) {
+            if ((element = iterator.next()).getClassName().contains("cz.codecamp") || element.getClassName().contains("formatter")) {
                 path = "";
                 path += element.getLineNumber();
                 path += ":" + element.getClassName();

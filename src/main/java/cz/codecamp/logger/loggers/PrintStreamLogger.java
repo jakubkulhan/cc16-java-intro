@@ -1,13 +1,11 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.io.PrintStream;
 
-public class PrintStreamLogger implements LoggerInterface, Closeable {
+public class PrintStreamLogger implements PragmaticLoggerInterface {
 
     private PrintStream printStream;
 
@@ -17,11 +15,11 @@ public class PrintStreamLogger implements LoggerInterface, Closeable {
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        printStream.print(level.name() + " " + message);
+        printStream.print(formatter.format(level, message));
     }
 
-    @Override
-    public void close() throws IOException {
+    public void close(){
         printStream.close();
     }
+
 }

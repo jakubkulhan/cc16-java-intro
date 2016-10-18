@@ -4,17 +4,14 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FileLogger implements PragmaticLoggerInterface {
+public class FileLogger implements PragmaticLoggerInterface, Closeable {
 
     private PrintStream stream;
 
@@ -30,10 +27,10 @@ public class FileLogger implements PragmaticLoggerInterface {
     private void createStream(){
         try {
             if(stream != null){
-                stream.close();
+                close();
             }
             stream = new PrintStream(new FileOutputStream(new File(df.format(new Date()) + ".log")), true);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -73,5 +70,10 @@ public class FileLogger implements PragmaticLoggerInterface {
             return time;
         }
 
+    }
+
+    @Override
+    public void close() throws IOException {
+        stream.close();
     }
 }
