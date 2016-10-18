@@ -1,11 +1,15 @@
 package cz.codecamp.logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.codecamp.logger.formaters.JsonFormatter;
+import cz.codecamp.logger.loggers.FileLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
+import cz.codecamp.logger.loggers.StderrLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class LoggerTester {
 
@@ -21,8 +25,20 @@ public class LoggerTester {
     }
 
     public static void main(String[] args) {
+        LoggerInterface logger = new MultiLogger(new StdoutLogger());
+        StdoutLogger logger1 = new StdoutLogger();
+        logger1.setFormatter(new JsonFormatter(new ObjectMapper()));
+        FileLogger logger2 = null;
+        try {
+            logger2 = new FileLogger("application.log");
+        } catch(FileNotFoundException exception) {
+            exception.printStackTrace();
+        }
+        StderrLogger logger3 = new StderrLogger();
+        logger3.setLowestLogLevel(LogLevelEnum.WARNING);
 
-        LoggerInterface logger = new StdoutLogger();
+        StdoutLogger logger4 = new StdoutLogger();
+        logger4.setLowestLogLevel(LogLevelEnum.DEBUG);
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
@@ -44,8 +60,11 @@ public class LoggerTester {
                 System.err.println("unknown level [" + parts[0] + "]");
                 continue;
             }
-
             logger.log(level, parts[1]);
+            logger1.log(level, parts[1]);
+            logger2.log(level, parts[1]);
+            logger3.log(level, parts[1]);
+            logger4.log(level, parts[1]);
         }
     }
 
