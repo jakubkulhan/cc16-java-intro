@@ -11,7 +11,7 @@ import java.io.PrintStream;
 /**
  * Created by filip on 03/10/16.
  */
-public class PrintStreamLogger implements LoggerInterface {
+public class PrintStreamLogger extends AbstractLogger {
     private PrintStream printStream;
 
     PrintStreamLogger(PrintStream printStream) {
@@ -21,5 +21,10 @@ public class PrintStreamLogger implements LoggerInterface {
     @Override
     public void log(LogLevelEnum level, String message) {
         printStream.println(level.toString() + message);
+    }
+
+    @Override
+    public void write(String msg) {
+        printStream.println(msg);
     }
 }
