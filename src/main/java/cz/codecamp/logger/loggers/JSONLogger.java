@@ -2,6 +2,10 @@ package cz.codecamp.logger.loggers;
 import com.google.gson.*;
 import cz.codecamp.logger.LogLevelEnum;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 /**
  * Created by Lenovo on 11.10.2016.
  */
@@ -28,7 +32,9 @@ public class JSONLogger {
      * @param msg
      * @return JSON string for Message object
      */
-    public String format(LogLevelEnum lvl, long ts, String msg) {
+    String format(LogLevelEnum lvl, LocalDateTime date, String msg) {
+        ZonedDateTime zdt = date.atZone(ZoneId.of("Europe/Paris"));
+        long ts = zdt.toInstant().toEpochMilli();
         Message message = new Message(lvl, ts, msg);
         String str = gson.toJson(message);
         return str;

@@ -4,6 +4,10 @@ import cz.codecamp.logger.LogLevelEnum;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import static org.junit.Assert.*;
 
 /**
@@ -18,9 +22,13 @@ public class JSONLoggerTest {
 
     @Test
     public void format() throws Exception {
-        long testTs = 123456;
+        LocalDateTime date = LocalDateTime.now();
+        ZonedDateTime zdt = date.atZone(ZoneId.of("Europe/Paris"));
+        long testTs = zdt.toInstant().toEpochMilli();
+        System.out.println(testTs);
         String testMsg = "Saint Louis";
-        String testJSON = jsnlgr.format(LogLevelEnum.DEBUG, testTs, testMsg);
+        String testJSON = jsnlgr.format(LogLevelEnum.DEBUG, date, testMsg);
+        System.out.println(testJSON);
         assertEquals("",testJSON, "{\"lvl\":\""+LogLevelEnum.DEBUG+"\",\"ts\":"+testTs+",\"msg\":\""+testMsg+"\"}");
     }
 }
