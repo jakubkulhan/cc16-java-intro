@@ -1,8 +1,5 @@
-package cz.codecamp.logger.loggers;
+package cz.codecamp.logger;
 
-import cz.codecamp.logger.FormatterInterface;
-import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.SingleFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 
