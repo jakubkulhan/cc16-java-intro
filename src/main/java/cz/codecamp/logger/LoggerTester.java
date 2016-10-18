@@ -1,11 +1,9 @@
 package cz.codecamp.logger;
 
-import cz.codecamp.logger.loggers.StdoutLogger;
+import cz.codecamp.logger.loggers.*;
+import java.nio.file.Paths;
+import java.util.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class LoggerTester {
 
@@ -22,7 +20,17 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
+        List<LoggerInterface> loggers = new ArrayList<>();
+        StdoutLogger stdl = new StdoutLogger();
+        stdl.setBound(LogLevelEnum.WARNING);
+        stdl.toJSON();
+        loggers.add(stdl);
+        FileLogger flgr = new FileLogger(Paths.get("application.log"));
+        flgr.setBound(LogLevelEnum.ERROR);
+        loggers.add(flgr);
+        loggers.add(new StderrLogger());
+
+        LoggerInterface logger = new MultiLogger(loggers);
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
