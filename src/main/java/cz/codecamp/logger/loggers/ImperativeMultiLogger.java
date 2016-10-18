@@ -7,6 +7,7 @@ import cz.codecamp.logger.LoggerInterface;
  * Created by honzapua on 9.10.2016.
  */
 public class ImperativeMultiLogger extends MultiLogger {
+    //LoggerInterface... zapis pro pole
     public ImperativeMultiLogger(LoggerInterface... loggerInterfaces) {
         super(loggerInterfaces);
     }
