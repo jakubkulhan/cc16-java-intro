@@ -1,5 +1,6 @@
 package cz.codecamp.logger.loggers;
 
+import cz.codecamp.logger.ApplicationConst;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.SingleFormatter;
@@ -13,14 +14,6 @@ import java.io.PrintStream;
  * Created by honzapua on 18.10.2016.
  */
 public class PrintStreamLoggerTest {
-    private static final String EOL_SEQUENCE;
-    static {
-        String eolProperty = System.getProperty("line.separator");
-        if (eolProperty == null) {
-            eolProperty = "\n";
-        }
-        EOL_SEQUENCE = eolProperty;
-    }
 
     @Test
     public void isLoggingToStream() throws Exception {
@@ -33,7 +26,7 @@ public class PrintStreamLoggerTest {
 
         ps.flush();
         String actual = baos.toString();
-        String expected = "[DEBUG] Test message" + EOL_SEQUENCE;
+        String expected = String.format("[DEBUG] Test message%s", ApplicationConst.EOL_SEQUENCE);
 
         Assert.assertEquals(expected, actual);
     }
