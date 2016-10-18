@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ExtractFileNameTest {
 
     @Test
-    public void testExtract_1() throws Exception {
+    public void checkFileNameExtraction() throws Exception {
         String expected = "file";
         String actual = FileUtils.extractFileName("file.ext");
 
@@ -17,7 +17,7 @@ public class ExtractFileNameTest {
     }
 
     @Test
-    public void testExtract_2() throws Exception {
+    public void checkIfDotIsPartOfFilename() throws Exception {
         String expected = "file.name";
         String actual = FileUtils.extractFileName("file.name.ext");
 
@@ -25,7 +25,7 @@ public class ExtractFileNameTest {
     }
 
     @Test
-    public void testExtract_3() throws Exception {
+    public void checkIfNoFileExtension() throws Exception {
         String expected = "file_ext";
         String actual = FileUtils.extractFileName("file_ext");
 
