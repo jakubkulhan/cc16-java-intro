@@ -11,13 +11,16 @@ import java.io.PrintStream;
 /**
  * Created by Lenovo on 5.10.16.
  */
-public class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface, Closeable {
-private PrintStream printStream;
+    public class PrintStreamLogger implements LoggerInterface, PragmaticLoggerInterface, Closeable {
+    private PrintStream printStream;
 
-public PrintStreamLogger(PrintStream printStream) {
-    this.printStream = printStream;
+    /**
+     * Constructor accepts any PrintStream
+     * @param printStream
+     */
+    public PrintStreamLogger(PrintStream printStream) {
+        this.printStream = printStream;
     }
-
 
     @Override
     public void log(LogLevelEnum level, String message) {

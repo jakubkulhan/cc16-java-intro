@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 public class JSONLogger {
     private Gson gson = new Gson();
     /**
-     * Message class used for JSON formatting
+     * Message class used for converting message to objects, that gonna be formatted to JSON String
      */
     private class Message {
         LogLevelEnum lvl;
@@ -27,10 +27,11 @@ public class JSONLogger {
 
     /**
      *
-     * @param lvl
-     * @param ts
-     * @param msg
-     * @return JSON string for Message object
+     * @param lvl logging level
+     * @param date current system time
+     * @param msg log message
+     * @return JSON String of object from Message
+     * source : http://stackoverflow.com/questions/23944370/how-to-get-milliseconds-from-localdatetime-in-java-8
      */
     String format(LogLevelEnum lvl, LocalDateTime date, String msg) {
         ZonedDateTime zdt = date.atZone(ZoneId.of("Europe/Paris"));

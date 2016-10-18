@@ -21,7 +21,7 @@ public class JSONLoggerTest {
     }
 
     @Test
-    public void format() throws Exception {
+    public void formatTest() throws Exception {
         LocalDateTime date = LocalDateTime.now();
         ZonedDateTime zdt = date.atZone(ZoneId.of("Europe/Paris"));
         long testTs = zdt.toInstant().toEpochMilli();
@@ -29,6 +29,6 @@ public class JSONLoggerTest {
         String testMsg = "Saint Louis";
         String testJSON = jsnlgr.format(LogLevelEnum.DEBUG, date, testMsg);
         System.out.println(testJSON);
-        assertEquals("",testJSON, "{\"lvl\":\""+LogLevelEnum.DEBUG+"\",\"ts\":"+testTs+",\"msg\":\""+testMsg+"\"}");
+        assertEquals(testJSON, "{\"lvl\":\""+LogLevelEnum.DEBUG+"\",\"ts\":"+testTs+",\"msg\":\""+testMsg+"\"}");
     }
 }

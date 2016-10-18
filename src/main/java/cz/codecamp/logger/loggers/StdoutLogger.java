@@ -6,14 +6,15 @@ import cz.codecamp.logger.PragmaticLoggerInterface;
 
 public class StdoutLogger implements LoggerInterface, PragmaticLoggerInterface {
     private StringFormatter stringFormatter;
-
+    private MessageFilter msgFltr;
     public StdoutLogger() {
         stringFormatter = new StringFormatter(true);
+        msgFltr = new MessageFilter(LogLevelEnum.WARNING);
     }
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        System.out.printf("%s\n", stringFormatter.format(level, message));
+        if(msgFltr.send(level)) System.out.printf("%s\n", stringFormatter.format(level, message));
     }
 
     @Override

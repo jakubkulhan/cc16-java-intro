@@ -11,17 +11,26 @@ import java.util.Locale;
  */
 public class StringFormatter implements FormatterInterface {
     private boolean withDate = true;
-    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat date;
 
+    /**
+     * Basic constructor sets format of log line : if
+     * @param withDate, then LoggerInterface.log(...) method logs messages with current system time, else logs w/out date
+     */
     public StringFormatter(boolean withDate) {
         this.withDate = withDate;
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
+    /**
+     * @param level - logging level from logger.LogLevelEnum
+     * @param message - String log message
+     * @return formatted log message with or w/out current system time.
+     */
     @Override
     public String format(LogLevelEnum level, String message) {
         if(withDate) {
-            return "[" + level + "] " + "[" + dateFormat.format(new Date()) + "]: " + message;
+            return "[" + level + "] " + "[" + date.format(new Date()) + "]: " + message;
         } else {
             return "[" + level + "]: " + message;
         }

@@ -1,14 +1,11 @@
 package cz.codecamp.logger;
 
-import cz.codecamp.logger.loggers.StdoutLogger;
+import cz.codecamp.logger.loggers.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class LoggerTester {
-
     private static final Map<String, LogLevelEnum> LEVEL_MAP;
 
     static {
@@ -20,17 +17,22 @@ public class LoggerTester {
         LEVEL_MAP = Collections.unmodifiableMap(levelMap);
     }
 
-    public static void main(String[] args) {
-
-        LoggerInterface logger = new StdoutLogger();
-
+    public static void main(String[] args) throws FileNotFoundException {
+        /*LoggerInterface fileStream = new FileLogger();
+        LoggerInterface standartOut = new StdoutLogger();
+        List<LoggerInterface> list = new ArrayList<LoggerInterface>();
+        list.add(fileStream);
+        list.add(standartOut);
+        //LoggerInterface logger = new ImperativeMultiLogger(list);
+        LoggerInterface logger = new FunctionalMultiLogger(list);*/
+        //FileRotationLogger frl = new FileRotationLogger(0,0,1);
+        FileLogger fileLogger = new FileLogger();
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
 
             if (!scanner.hasNextLine()) {
                 break;
             }
-
             String line = scanner.nextLine();
             String[] parts = line.split("\\s+", 2);
 
@@ -45,7 +47,7 @@ public class LoggerTester {
                 continue;
             }
 
-            logger.log(level, parts[1]);
+            fileLogger.log(level, parts[1]);
         }
     }
 
