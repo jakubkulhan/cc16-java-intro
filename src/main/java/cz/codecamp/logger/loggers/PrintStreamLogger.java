@@ -6,17 +6,23 @@ import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
 import cz.codecamp.logger.formatters.LogFormatter;
 
-public class StdoutLogger extends Logger implements LoggerInterface, PragmaticLoggerInterface {
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.PrintStream;
 
+public class PrintStreamLogger extends Logger implements LoggerInterface, PragmaticLoggerInterface, Closeable {
 
+    private PrintStream printStream;
     private FormatterInterface defaultFormatter;
 
-    public StdoutLogger() {
+    public PrintStreamLogger(PrintStream printStream) {
+        this.printStream = printStream;
         defaultFormatter = new LogFormatter();
     }
 
     @Override
     public void log(LogLevelEnum level, String message) {
+
         if (level.ordinal() >= getMinLogLevel().ordinal()) {
             System.out.println(defaultFormatter.format(level, message));
         }
@@ -27,7 +33,10 @@ public class StdoutLogger extends Logger implements LoggerInterface, PragmaticLo
         if (level.ordinal() >= getMinLogLevel().ordinal()) {
             System.out.println(formatter.format(level, message));
         }
-
     }
 
+    @Override
+    public void close() throws IOException {
+        printStream.close();
+    }
 }
