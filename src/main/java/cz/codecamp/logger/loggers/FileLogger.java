@@ -3,41 +3,77 @@ package cz.codecamp.logger.loggers;
 import cz.codecamp.logger.LogLevelEnum;
 import cz.codecamp.logger.LoggerInterface;
 import cz.codecamp.logger.PragmaticLoggerInterface;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
+
     private PrintStream fileStream;
+    private String logFileName;
+
 
     public FileLogger() {
-        try {
+        this.logFileName = createLogFileName();
+        initMapOfLevels();
+        createFileStream();
+    }
 
-            fileStream = new PrintStream(new FileOutputStream(new File("application.log"), true));
+    public boolean createLog(LogLevelEnum level, String message){
+        fileStream.printf("[" + level.name() + "] [" + formatTime.format(new Date()) + "] " + message + "\n");
+        System.out.println("Logged in to file: " + this.logFileName);
+        return true;
+    }
+
+    @Override
+    public void log(LogLevelEnum level, String message, int minimumLevel) {
+        System.out.println("Called from: " +  Thread.currentThread().getStackTrace()[1].getClassName() + ": " + Thread.currentThread().getStackTrace()[1].getLineNumber());
+
+        if (!createLogFileName().equals(this.logFileName)){
+            this.logFileName = createLogFileName();
+            createFileStream();
+            System.out.println("New log file created.");
+        }
+        if (mapOfLevels.get(level) >= minimumLevel){
+            createLog(level, message);
+        }
+    }
+
+    public String createLogFileName() {
+        String fileName = "log " + format.format(new Date()) + ".log";
+        System.out.println("Created new file.");
+        return fileName;
+    }
+
+    public void initMapOfLevels(){
+        mapOfLevels.put(LogLevelEnum.DEBUG,1);
+        mapOfLevels.put(LogLevelEnum.INFO,2);
+        mapOfLevels.put(LogLevelEnum.WARNING,3);
+        mapOfLevels.put(LogLevelEnum.ERROR,4);
+    }
+
+    public void createFileStream(){
+        try {
+            this.fileStream = new PrintStream(
+                    new FileOutputStream(
+                            new File(this.logFileName), true
+                    )
+            );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void log(LogLevelEnum level, String message) {
-        fileStream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
+    public PrintStream getFileStream() {
+        return fileStream;
     }
 
-    /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
-     * <p>
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
-     *
-     * @throws IOException if an I/O error occurs
-     */
+    public void setLogFileName(String logFileName) {
+        this.logFileName = logFileName;
+    }
+
     @Override
     public void close() throws IOException {
         if (fileStream != null){

@@ -11,35 +11,38 @@ import java.io.PrintStream;
 import java.util.Date;
 
 public class PrintStreamLogger implements LoggerInterface, Closeable, PragmaticLoggerInterface {
-    private PrintStream stream;
 
-    public PrintStreamLogger(PrintStream stream) {
-        this.stream = stream;
+    private PrintStream printStream;
+
+    public PrintStreamLogger(PrintStream printStream) {
+        this.printStream = printStream;
+        initMapOfLevels();
     }
 
     @Override
-    public void log(LogLevelEnum level, String message) {
-        stream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
-    }
-
-    /**
-     * Closes this stream and releases any system resources associated
-     * with it. If the stream is already closed then invoking this
-     * method has no effect.
-     * <p>
-     * <p> As noted in {@link AutoCloseable#close()}, cases where the
-     * close may fail require careful attention. It is strongly advised
-     * to relinquish the underlying resources and to internally
-     * <em>mark</em> the {@code Closeable} as closed, prior to throwing
-     * the {@code IOException}.
-     *
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    public void close() throws IOException {
-        if (stream != null){
-            stream.flush();
-            stream.close();
+    public void log(LogLevelEnum level, String message, int minimumLevel) {
+        if (mapOfLevels.get(level) >= minimumLevel) {
+            printStream.printf("[%s] [%s]: %s\n", format.format(new Date()), level.name(), message);
         }
     }
+
+    @Override
+    public void close() throws IOException {
+        if (printStream != null) {
+            printStream.flush();
+            printStream.close();
+        }
+    }
+
+    public PrintStream getPrintStream() {
+        return printStream;
+    }
+
+    public void initMapOfLevels(){
+        mapOfLevels.put(LogLevelEnum.DEBUG,1);
+        mapOfLevels.put(LogLevelEnum.INFO,2);
+        mapOfLevels.put(LogLevelEnum.WARNING,3);
+        mapOfLevels.put(LogLevelEnum.ERROR,4);
+    }
+
 }

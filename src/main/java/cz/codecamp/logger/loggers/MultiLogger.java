@@ -18,15 +18,11 @@ public class MultiLogger implements LoggerInterface, PragmaticLoggerInterface {
         this.loggers = loggers;
     }
 
-    @Override
-    public void log(LogLevelEnum level, String message)
+    public void log(LogLevelEnum level, String message, int minimumLevel)
     {
-        // Varinata 1
         for (LoggerInterface logger : loggers) {
-            logger.log(level, message);
+            logger.log(level, message, minimumLevel);
         }
 
-        //Varianta 2
-        loggers.forEach((l) -> l.log(level, message));
     }
 }
