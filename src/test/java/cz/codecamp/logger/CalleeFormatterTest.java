@@ -9,14 +9,12 @@ import org.junit.Test;
 public class CalleeFormatterTest {
 
     @Test
-    public void testCalleeFormatter() throws Exception {
+    public void isSelfInLogMessage() throws Exception {
         CalleeFormatter cf = new CalleeFormatter();
 
         String actual = cf.format(LogLevelEnum.DEBUG, "Message");
+        Assert.assertTrue(actual.contains(CalleeFormatterTest.class.getName()));
 
-        System.err.println(actual);
-
-        Assert.assertNotNull(actual);
     }
 
 }

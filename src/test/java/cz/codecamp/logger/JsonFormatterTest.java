@@ -9,12 +9,10 @@ import org.junit.Test;
 public class JsonFormatterTest {
 
     @Test
-    public void testJson() throws Exception {
+    public void testConversionToJson() throws Exception {
         JsonFormatter jf = new JsonFormatter();
 
         String actual = jf.format(LogLevelEnum.DEBUG, "Message");
-
-        System.err.println(actual);
 
         Assert.assertNotNull(actual);
     }
