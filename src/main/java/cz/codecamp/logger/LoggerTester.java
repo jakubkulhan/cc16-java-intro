@@ -4,9 +4,12 @@ import cz.codecamp.logger.loggers.FileLogger;
 import cz.codecamp.logger.loggers.MultiLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ThreadFactory;
 
 public class LoggerTester {
 
@@ -21,13 +24,22 @@ public class LoggerTester {
         LEVEL_MAP = Collections.unmodifiableMap(levelMap);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
-        StdoutLogger logger = new StdoutLogger();
+        StdoutLogger stdoutLogger = new StdoutLogger();
+        FileLogger fileLogger = new FileLogger(new PrintStream(new FileOutputStream(new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log"), true)));
+
         List<PragmaticLoggerInterface> loggers = new ArrayList<>();
-        loggers.add(logger);
-        loggers.add(new FileLogger());
+        loggers.add(stdoutLogger);
+        loggers.add(fileLogger);
         LoggerInterface multiLog = new MultiLogger(loggers);
+
+        int index = 0;
+        for (int i = 0; i < Thread.currentThread().getStackTrace().length; i++) {
+            if (Thread.currentThread().getStackTrace()[i].getClassName().equals(LoggerTester.class.getName()))
+                index = i;
+        }
+
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
 
@@ -49,14 +61,17 @@ public class LoggerTester {
                 continue;
             }
 
-           // logger.log1(level, parts[1], Thread.currentThread().getStackTrace()[1].getClassName(), Thread.currentThread().getStackTrace()[1].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[1].getClassName());
-           // for(Thread.currentThread().getStackTrace().length)
-            for (int i = 0; i < Thread.currentThread().getStackTrace().length; i++){
-                System.out.println(i + " " + Thread.currentThread().getStackTrace()[i]);
-            }
-            multiLog.logJson(level, parts[1]);
-            System.out.println(LocalDateTime.now().getHour() + " " + LocalDateTime.now().getMinute() + " " + LocalDateTime.now().getSecond());
+            /*Multilig in JSON format*/
+            multiLog.logJson(level, parts[1], Thread.currentThread().getStackTrace()[index].getClassName(), Thread.currentThread().getStackTrace()[index].getLineNumber());
+
+//            /*multilog*/
+//            multiLog.log(level, parts[1]);
+//            /*filelog in JSON format*/
+//            fileLogger.logJson(level, parts[1], Thread.currentThread().getStackTrace()[index].getClassName(), Thread.currentThread().getStackTrace()[index].getLineNumber());
+//
+//            fileLogger.log(level, parts[1]);
+//
+//            stdoutLogger.log(level, parts[1], Thread.currentThread().getStackTrace()[index].getClassName(), Thread.currentThread().getStackTrace()[index].getLineNumber());
         }
     }
 

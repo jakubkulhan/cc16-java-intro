@@ -21,17 +21,11 @@ public class MultiLogger implements PragmaticLoggerInterface {
 
     @Override
     public void log(LogLevelEnum level, LocalDateTime time, String message) {
-        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
-            loggers.forEach(logger -> logger.log(level, time, message));
+        loggers.forEach(logger -> logger.log(level, time, message));
     }
 
     @Override
     public void log(String message) {
         loggers.forEach(logger -> logger.log(message));
-    }
-
-    @Override
-    public void close() {
-        loggers.forEach(logger -> logger.close());
     }
 }

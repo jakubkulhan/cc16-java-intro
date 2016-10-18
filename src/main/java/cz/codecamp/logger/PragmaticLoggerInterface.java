@@ -16,6 +16,4 @@ public interface PragmaticLoggerInterface extends LoggerInterface {
     default void error(String message) {
         System.out.println("error message: " + message);
     }
-
-    void close();
 }

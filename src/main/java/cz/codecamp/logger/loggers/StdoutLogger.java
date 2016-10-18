@@ -21,17 +21,11 @@ public class StdoutLogger implements PragmaticLoggerInterface {
 
     @Override
     public void log(String message) {
-        System.out.printf("%s", message);
+        System.out.printf("%s\n", message);
     }
 
-    @Override
-    public void close() {
-        //TODO
+    public void log(LogLevelEnum level, String message, String className, int lineNumber) {
+        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
+            System.out.printf(LocalDateTime.now() + " [%s] " + className + " on the line " + lineNumber + ": %s\n", level.name(), message);
     }
-
-//    //TODO remove
-//    public void log1(LogLevelEnum level, String message, String className, int lineNumber) {
-//        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
-//            System.out.printf(LocalDateTime.now() + " [%s] " + className + " on the line " + lineNumber + ": %s\n", level.name(), message);
-//    }
 }

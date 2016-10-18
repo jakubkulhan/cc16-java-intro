@@ -13,12 +13,12 @@ public class FileLogger implements PragmaticLoggerInterface {
 
     private PrintStream fileStream;
 
-    public FileLogger() {
-        try {
-            this.fileStream = new PrintStream(new FileOutputStream(new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log"), true));
-        } catch (FileNotFoundException e) {
-            System.out.println("file does not exist");
-        }
+    public FileLogger(PrintStream fileStream) {
+        //try {
+            this.fileStream = fileStream;//new PrintStream(new FileOutputStream(new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log"), true));
+//        } catch (FileNotFoundException e) {
+//            System.out.println("file does not exist");
+//        }
     }
 
     @Override
@@ -32,7 +32,7 @@ public class FileLogger implements PragmaticLoggerInterface {
     public void log(LogLevelEnum level, LocalDateTime time, String message) {
         newLogFilePerDay();
         if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
-            fileStream.println("\n" + time + " [" + level.name() + "] " + message);
+            fileStream.println(time + " [" + level.name() + "] " + message);
     }
 
     //log in JSON format
@@ -42,12 +42,11 @@ public class FileLogger implements PragmaticLoggerInterface {
         fileStream.println(message);
     }
 
-    @Override
     public void close() {
         fileStream.close();
     }
 
-    private void newLogFilePerDay() {
+    public void newLogFilePerDay() {
         File f = new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log");
         if (!f.exists()) {
             try {

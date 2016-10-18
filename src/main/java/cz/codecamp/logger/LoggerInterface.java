@@ -9,10 +9,10 @@ public interface LoggerInterface extends FormatterInterface {
 
     void log(String message);
 
-    default void logJson(LogLevelEnum level, String message) {
+    default void logJson(LogLevelEnum level, String message, String className, int lineNumber) {
         String dateTime = LocalDateTime.now().toString();
         if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR)) {
-            log(format(level, dateTime, message));
+            log(format(level, dateTime, message, className, lineNumber));
         }
     }
 }
