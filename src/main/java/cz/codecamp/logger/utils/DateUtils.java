@@ -9,7 +9,11 @@ import java.util.GregorianCalendar;
  */
 public final class DateUtils {
 
-
+    /**
+     * Vraci aktualni hodinu podle JVM default.
+     *
+     * @return vraci aktualni hodinu
+     */
     public static Calendar currentHour() {
         Calendar result = new GregorianCalendar();
         result.clear(Calendar.MINUTE);
@@ -18,8 +22,18 @@ public final class DateUtils {
         return result;
     }
 
+    public static Calendar currentDay() {
+        Calendar result = currentHour();
+        result.clear(Calendar.HOUR_OF_DAY);
+        return result;
+    }
+
     public static Date currentDateHour() {
         return currentHour().getTime();
+    }
+
+    public static Date currentDateDay() {
+        return currentDay().getTime();
     }
 
     /**
