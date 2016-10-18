@@ -1,25 +1,37 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created by bmandzhi
- */
-public class MultiLogger implements LoggerInterface {
+public class MultiLogger implements PragmaticLoggerInterface {
 
-    private List<LoggerInterface> loggers;
+    private List<PragmaticLoggerInterface> loggers;
 
-    public MultiLogger(List<LoggerInterface> loggers) {
+    public MultiLogger(List<PragmaticLoggerInterface> loggers) {
         this.loggers = loggers;
     }
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        for (LoggerInterface l : loggers) {
-            l.log(level, message);
-        }
+        loggers.forEach(logger -> logger.log(level, message));
+    }
+
+    @Override
+    public void log(LogLevelEnum level, LocalDateTime time, String message) {
+        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
+            loggers.forEach(logger -> logger.log(level, time, message));
+    }
+
+    @Override
+    public void log(String message) {
+        loggers.forEach(logger -> logger.log(message));
+    }
+
+    @Override
+    public void close() {
+        loggers.forEach(logger -> logger.close());
     }
 }

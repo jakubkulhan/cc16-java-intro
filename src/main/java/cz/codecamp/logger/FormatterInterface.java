@@ -1,5 +1,11 @@
 package cz.codecamp.logger;
 
+import com.google.gson.Gson;
+
 public interface FormatterInterface {
-    String format(LogLevelEnum level, String message);
+    default String format(LogLevelEnum level, String dateTime, String message) {
+        ObjectToLog logMessage = new ObjectToLog(level, dateTime, message);
+        Gson gson = new Gson();
+        return gson.toJson(logMessage);
+    }
 }

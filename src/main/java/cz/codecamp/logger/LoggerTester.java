@@ -1,11 +1,12 @@
 package cz.codecamp.logger;
 
+import cz.codecamp.logger.loggers.FileLogger;
+import cz.codecamp.logger.loggers.MultiLogger;
 import cz.codecamp.logger.loggers.StdoutLogger;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.ThreadFactory;
 
 public class LoggerTester {
 
@@ -22,8 +23,11 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new StdoutLogger();
-
+        StdoutLogger logger = new StdoutLogger();
+        List<PragmaticLoggerInterface> loggers = new ArrayList<>();
+        loggers.add(logger);
+        loggers.add(new FileLogger());
+        LoggerInterface multiLog = new MultiLogger(loggers);
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
 
@@ -45,7 +49,14 @@ public class LoggerTester {
                 continue;
             }
 
-            logger.log(level, parts[1]);
+           // logger.log1(level, parts[1], Thread.currentThread().getStackTrace()[1].getClassName(), Thread.currentThread().getStackTrace()[1].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[1].getClassName());
+           // for(Thread.currentThread().getStackTrace().length)
+            for (int i = 0; i < Thread.currentThread().getStackTrace().length; i++){
+                System.out.println(i + " " + Thread.currentThread().getStackTrace()[i]);
+            }
+            multiLog.logJson(level, parts[1]);
+            System.out.println(LocalDateTime.now().getHour() + " " + LocalDateTime.now().getMinute() + " " + LocalDateTime.now().getSecond());
         }
     }
 

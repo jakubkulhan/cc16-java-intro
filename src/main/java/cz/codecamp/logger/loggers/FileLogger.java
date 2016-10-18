@@ -1,23 +1,21 @@
 package cz.codecamp.logger.loggers;
 
 import cz.codecamp.logger.LogLevelEnum;
-import cz.codecamp.logger.LoggerInterface;
+import cz.codecamp.logger.PragmaticLoggerInterface;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDateTime;
 
-/**
- * Created by Bulgn Mandzhieva
- */
-public class FileLogger implements LoggerInterface {
+public class FileLogger implements PragmaticLoggerInterface {
 
     private PrintStream fileStream;
 
     public FileLogger() {
         try {
-            this.fileStream = new PrintStream(new FileOutputStream(new File("application.log"), true));
+            this.fileStream = new PrintStream(new FileOutputStream(new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log"), true));
         } catch (FileNotFoundException e) {
             System.out.println("file does not exist");
         }
@@ -25,7 +23,38 @@ public class FileLogger implements LoggerInterface {
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        fileStream.print("[" + level.name() + "]: ");
+        newLogFilePerDay();
+        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
+            fileStream.println(LocalDateTime.now() + " [" + level.name() + "] " + message);
+    }
+
+    @Override
+    public void log(LogLevelEnum level, LocalDateTime time, String message) {
+        newLogFilePerDay();
+        if (level.equals(LogLevelEnum.WARNING) || level.equals(LogLevelEnum.ERROR))
+            fileStream.println("\n" + time + " [" + level.name() + "] " + message);
+    }
+
+    //log in JSON format
+    @Override
+    public void log(String message) {
+        newLogFilePerDay();
         fileStream.println(message);
+    }
+
+    @Override
+    public void close() {
+        fileStream.close();
+    }
+
+    private void newLogFilePerDay() {
+        File f = new File("application_" + LocalDateTime.now().getDayOfMonth() + "_" + LocalDateTime.now().getMonth() + ".log");
+        if (!f.exists()) {
+            try {
+                fileStream = new PrintStream(new FileOutputStream(f, true));
+            } catch (FileNotFoundException e) {
+                System.out.println("file does not exist");
+            }
+        }
     }
 }
