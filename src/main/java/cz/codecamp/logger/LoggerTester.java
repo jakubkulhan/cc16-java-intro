@@ -25,7 +25,7 @@ public class LoggerTester {
 
     public static void main(String[] args) {
 
-        LoggerInterface logger = new MultiLogger(new FileLogger());
+        LoggerInterface logger = new MultiLogger(new FileLogger(FileLogger.Time.EVERY10SECONDS));
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");

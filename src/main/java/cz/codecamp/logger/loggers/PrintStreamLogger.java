@@ -7,11 +7,11 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public class PrintStreamLogger_2 implements LoggerInterface, Closeable {
+public class PrintStreamLogger implements LoggerInterface, Closeable {
 
     private PrintStream printStream;
 
-    public PrintStreamLogger_2(PrintStream printStream){
+    public PrintStreamLogger(PrintStream printStream){
         this.printStream = printStream;
     }
 

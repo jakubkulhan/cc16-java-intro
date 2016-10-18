@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 
 public interface PragmaticLoggerInterface extends LoggerInterface {
 
-    SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd hh:mm:ss");
+    Formatter formatter = new Formatter();
 
     default void debug(String message) {
         log(LogLevelEnum.DEBUG, message);

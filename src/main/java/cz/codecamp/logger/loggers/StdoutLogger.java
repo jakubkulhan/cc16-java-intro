@@ -10,7 +10,7 @@ public class StdoutLogger implements PragmaticLoggerInterface {
 
     @Override
     public void log(LogLevelEnum level, String message) {
-        System.out.printf("[%s]: [%s] %s\n", level.name(), dt.format(new Date()), message);
+        System.out.printf(formatter.format(level, message));
     }
 
 }
