@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8c9017b-0a40-47e9-bb5b-2bb8f48c79cc" name="Default" comment="Domaci ukol 1">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__junit_junit_4_11.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/intro.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/intro_main.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules/intro_test.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+    <list default="true" id="a8c9017b-0a40-47e9-bb5b-2bb8f48c79cc" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/application.log" afterPath="" />
     </list>
     <ignored path="intro.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1088,7 +1075,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476826288833</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Domaci ukol 1 - delete IDE files">
+      <created>1476826572768</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1476826572768</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1171,7 +1165,8 @@
     <MESSAGE value="task 5" />
     <MESSAGE value="Domaci ukol 1" />
     <MESSAGE value="Domaci ukol 1 - update gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Domaci ukol 1 - update gitignore" />
+    <MESSAGE value="Domaci ukol 1 - delete IDE files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Domaci ukol 1 - delete IDE files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
