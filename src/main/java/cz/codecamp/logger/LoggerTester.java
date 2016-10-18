@@ -1,6 +1,6 @@
 package cz.codecamp.logger;
 
-import cz.codecamp.logger.loggers.StdoutLogger;
+import cz.codecamp.logger.loggers.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,8 +21,30 @@ public class LoggerTester {
     }
 
     public static void main(String[] args) {
+        /*System.out.println("begin");
+        PrintStream stdout = System.out;
+        StringBuilder sb = new StringBuilder();
+        OutputStream os = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                sb.append((char) b);
+            }
 
-        LoggerInterface logger = new StdoutLogger();
+            @Override
+            public String toString() {
+                return sb.toString();
+            }
+        };
+        PrintStream ps = new PrintStream(os);
+        System.setOut(ps);
+        System.out.println("middle");
+        System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+        System.out.println("end");*/
+
+
+
+        AbstractLogger logger = new MultiLogger(new JsonLogger(new FileLogger()), new StdoutLogger(), new BunnyLogger(new StdoutLogger(), LogLevelEnum.INFO));
+        logger.error("Error");
 
         for (Scanner scanner = new Scanner(System.in); ; ) {
             System.out.print("> ");
