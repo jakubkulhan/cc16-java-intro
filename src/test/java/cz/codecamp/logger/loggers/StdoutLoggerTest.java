@@ -51,16 +51,4 @@ public class StdoutLoggerTest {
         StackTraceElement[] ste = Thread.currentThread().getStackTrace(); // ! Must be right after calling log method -> to get proper line number in test result
         verify(out, never()).println("[WARNING] [" + dateTimeFormatter.format(now) + "] test Class: " + ste[1].getClassName() + " line: " + (ste[1].getLineNumber()-1));
     }
-
-    /*
-    @Test
-    public void testOutputOdStdOutLoggerWithGivenJSONFormatter() throws Exception {
-        //Date mockedDate = mock(Date.class);
-        //when(mockedDate.getTime()).thenReturn(1476562551694L);
-        FormatterInterface logFormatter = new LogJSONFormatter();
-        logger.log(LogLevelEnum.INFO, "test1", logFormatter);
-        StackTraceElement[] ste = Thread.currentThread().getStackTrace(); // ! Must be right after calling log method -> to get proper line number in test result
-        verify(out).println("{\"lvl\":\"INFO\",\"ts\":" + new Date().getTime() + ",\"msg\":\"test2\",\"className\":\"" + ste[1].getClassName() + "\",\"lineNumber\":" + (ste[1].getLineNumber() - 1) + "}");
-    }
-*/
 }

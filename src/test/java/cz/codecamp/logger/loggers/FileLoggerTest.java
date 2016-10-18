@@ -34,7 +34,6 @@ public class FileLoggerTest {
         logger = new FileLogger();
         now = LocalDateTime.now();
         dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     }
 
     @Rule
